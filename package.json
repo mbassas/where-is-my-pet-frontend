@@ -30,5 +30,6 @@
   },
   "devDependencies": {
     "gh-pages": "^2.2.0"
-  }
+  },
+  "homepage": "https://mbassas.github.io/where-is-my-pet-frontend"
 }
