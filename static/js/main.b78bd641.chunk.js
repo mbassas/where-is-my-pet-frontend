@@ -1,0 +1,2 @@
+(this["webpackJsonpwhere-is-my-pet-frontend"]=this["webpackJsonpwhere-is-my-pet-frontend"]||[]).push([[0],[,,,function(e,t,n){e.exports=n(4)},function(e,t,n){"use strict";n.r(t);var r=n(0),o=n.n(r),s=n(2);n.n(s).a.render(o.a.createElement(o.a.StrictMode,null,"Hello World"),document.getElementById("root"))}],[[3,1,2]]]);
+//# sourceMappingURL=main.b78bd641.chunk.js.map
