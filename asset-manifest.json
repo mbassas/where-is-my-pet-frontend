@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/where-is-my-pet-frontend/static/js/main.d5f46ecc.chunk.js",
-    "main.js.map": "/where-is-my-pet-frontend/static/js/main.d5f46ecc.chunk.js.map",
+    "main.js": "/where-is-my-pet-frontend/static/js/main.44b8fdc3.chunk.js",
+    "main.js.map": "/where-is-my-pet-frontend/static/js/main.44b8fdc3.chunk.js.map",
     "runtime-main.js": "/where-is-my-pet-frontend/static/js/runtime-main.7639b268.js",
     "runtime-main.js.map": "/where-is-my-pet-frontend/static/js/runtime-main.7639b268.js.map",
     "static/js/2.422ac32c.chunk.js": "/where-is-my-pet-frontend/static/js/2.422ac32c.chunk.js",
     "static/js/2.422ac32c.chunk.js.map": "/where-is-my-pet-frontend/static/js/2.422ac32c.chunk.js.map",
     "index.html": "/where-is-my-pet-frontend/index.html",
-    "precache-manifest.bee4f115a46b33f3b971d1e024b0f901.js": "/where-is-my-pet-frontend/precache-manifest.bee4f115a46b33f3b971d1e024b0f901.js",
+    "precache-manifest.8071f24d8152df041feaf9a20cf439c6.js": "/where-is-my-pet-frontend/precache-manifest.8071f24d8152df041feaf9a20cf439c6.js",
     "service-worker.js": "/where-is-my-pet-frontend/service-worker.js",
     "static/js/2.422ac32c.chunk.js.LICENSE.txt": "/where-is-my-pet-frontend/static/js/2.422ac32c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7639b268.js",
     "static/js/2.422ac32c.chunk.js",
-    "static/js/main.d5f46ecc.chunk.js"
+    "static/js/main.44b8fdc3.chunk.js"
   ]
 }
