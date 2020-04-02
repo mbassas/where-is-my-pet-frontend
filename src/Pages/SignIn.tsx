@@ -34,7 +34,7 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
     render() {
         const { classes } = this.props;
         return (
-            <SignUpPagesLayout info="Some information over here">
+            <SignUpPagesLayout isLoading={this.state.isSubmitting} info="Some information over here">
                 {this.state.submitError && (
                     <>
                         <Alert severity="error">Ups - Cannot create account!</Alert>
