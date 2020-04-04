@@ -1,8 +1,9 @@
 import React, { Component, FormEvent } from 'react';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import SignUpPagesLayout from '../Components/Layouts/SignUpPagesLayout';
-import { TextField, Button, withStyles, WithStyles, createStyles, Grid } from '@material-ui/core';
+import { TextField, Button, withStyles, WithStyles, createStyles, Grid, Link as MuiLink } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
 
 interface IState {
     username: string,
@@ -34,28 +35,27 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
     render() {
         const { classes } = this.props;
         return (
-            <SignUpPagesLayout isLoading={this.state.isSubmitting} info="Some information over here">
+            <SignUpPagesLayout isLoading={this.state.isSubmitting} >
                 {this.state.submitError && (
                     <>
                         <Alert severity="error">Ups - Cannot create account!</Alert>
                         <br />
                     </>
                 )}
+                <p>
+                    Additional info here.
+                </p>
                 <form onSubmit={this._onSubmit}>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <TextField type="text" name="username" label="username" variant="outlined" className={classes.input} onChange={(event) => this.setState({ username: event.currentTarget.value })} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField type="password" name="password" label="password" variant="outlined" className={classes.input} onChange={(event) => this.setState({ password: event.currentTarget.value })} />
-                        </Grid>
-                        <hr />
-                        <Grid item xs={12}>
-                            <Button type="submit" value="SIGN UP" variant="contained" color="primary" disabled={this.state.isSubmitting}>
-                                SIGN IN
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    <TextField margin="normal" type="text" name="username" label="username" variant="outlined" className={classes.input} onChange={(event) => this.setState({ username: event.currentTarget.value })} />
+                    <TextField margin="normal" type="password" name="password" label="password" variant="outlined" className={classes.input} onChange={(event) => this.setState({ password: event.currentTarget.value })} />
+
+                    <Button type="submit" variant="contained" color="primary" disabled={this.state.isSubmitting} fullWidth>
+                        SIGN IN
+                    </Button>
+
+                    <div className={classes.forgotPassword}>
+                        <MuiLink component={Link} to="/recover-password">Forgot your password?</MuiLink>
+                    </div>
                 </form>
             </SignUpPagesLayout>
         )
@@ -65,6 +65,10 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
 const styles = createStyles({
     input: {
         width: "100%",
+    },
+    forgotPassword: {
+        marginTop: "10px",
+        textAlign: "center"
     }
 
 })
