@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/where-is-my-pet-frontend/static/js/main.44b8fdc3.chunk.js",
-    "main.js.map": "/where-is-my-pet-frontend/static/js/main.44b8fdc3.chunk.js.map",
+    "main.js": "/where-is-my-pet-frontend/static/js/main.69258c69.chunk.js",
+    "main.js.map": "/where-is-my-pet-frontend/static/js/main.69258c69.chunk.js.map",
     "runtime-main.js": "/where-is-my-pet-frontend/static/js/runtime-main.7639b268.js",
     "runtime-main.js.map": "/where-is-my-pet-frontend/static/js/runtime-main.7639b268.js.map",
-    "static/js/2.422ac32c.chunk.js": "/where-is-my-pet-frontend/static/js/2.422ac32c.chunk.js",
-    "static/js/2.422ac32c.chunk.js.map": "/where-is-my-pet-frontend/static/js/2.422ac32c.chunk.js.map",
+    "static/js/2.cca516fa.chunk.js": "/where-is-my-pet-frontend/static/js/2.cca516fa.chunk.js",
+    "static/js/2.cca516fa.chunk.js.map": "/where-is-my-pet-frontend/static/js/2.cca516fa.chunk.js.map",
     "index.html": "/where-is-my-pet-frontend/index.html",
-    "precache-manifest.8071f24d8152df041feaf9a20cf439c6.js": "/where-is-my-pet-frontend/precache-manifest.8071f24d8152df041feaf9a20cf439c6.js",
+    "precache-manifest.55c2fe8d8766377b318e0eabbc18000c.js": "/where-is-my-pet-frontend/precache-manifest.55c2fe8d8766377b318e0eabbc18000c.js",
     "service-worker.js": "/where-is-my-pet-frontend/service-worker.js",
-    "static/js/2.422ac32c.chunk.js.LICENSE.txt": "/where-is-my-pet-frontend/static/js/2.422ac32c.chunk.js.LICENSE.txt"
+    "static/js/2.cca516fa.chunk.js.LICENSE.txt": "/where-is-my-pet-frontend/static/js/2.cca516fa.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7639b268.js",
-    "static/js/2.422ac32c.chunk.js",
-    "static/js/main.44b8fdc3.chunk.js"
+    "static/js/2.cca516fa.chunk.js",
+    "static/js/main.69258c69.chunk.js"
   ]
 }
