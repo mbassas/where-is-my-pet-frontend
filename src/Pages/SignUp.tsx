@@ -1,6 +1,6 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import { TextField, Button, Grid, withStyles, WithStyles, createStyles, Snackbar } from '@material-ui/core';
+import { TextField, Button, withStyles, WithStyles, createStyles, Snackbar, InputAdornment, IconButton, TextFieldProps } from '@material-ui/core';
 import { Alert } from "@material-ui/lab"
 import SignUpPagesLayout from '../Components/Layouts/SignUpPagesLayout';
 
@@ -48,44 +48,51 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
     render() {
         const { classes } = this.props;
         return (
-            <SignUpPagesLayout info="Some information over here" isLoading={this.state.isSubmitting}>
+            <SignUpPagesLayout isLoading={this.state.isSubmitting}>
                 {this.state.submitError && (
                     <>
                         <Alert severity="error">Ups - Cannot create account!</Alert>
                         <br />
                     </>
                 )}
+                <p>
+                    Additional info here.
+                </p>
                 <form onSubmit={this._onSubmit}>
-                    <Grid container spacing={1}>
-                        <Grid item xs={12}>
-                            <TextField type="text" name="name" onChange={this._onChange} label="Name" variant="outlined" className={classes.input} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField type="text" name="surname" onChange={this._onChange} label="Surname" variant="outlined" className={classes.input} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField type="email" name="email" onChange={this._onChange} label="Email" variant="outlined" className={classes.input} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField type="tel" name="phone" onChange={this._onChange} label="Mobile phone" variant="outlined" className={classes.input} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField type="text" name="username" onChange={this._onChange} label="Username" variant="outlined" className={classes.input} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField type="password" name="password" onChange={this._onChange} label="Password" variant="outlined" className={classes.input} />
-                        </Grid>
-                        <hr />
-                        <Grid item xs={12}>
-                            <Button type="submit" value="SIGN UP" variant="contained" color="primary" disabled={this.state.isSubmitting}>
-                                SIGN UP
-                            </Button>
-                        </Grid>
-                    </Grid>
+                    <TextField margin={"normal"} type="text" name="name" onChange={this._onChange} label="Name" variant="outlined" className={classes.input} />
+                    <TextField margin={"normal"} type="text" name="surname" onChange={this._onChange} label="Surname" variant="outlined" className={classes.input} />
+                    <TextField margin={"normal"} type="email" name="email" onChange={this._onChange} label="Email" variant="outlined" className={classes.input} />
+                    <TextField margin={"normal"} type="tel" name="phone" onChange={this._onChange} label="Mobile phone" variant="outlined" className={classes.input} />
+                    <TextField margin={"normal"} type="text" name="username" onChange={this._onChange} label="Username" variant="outlined" className={classes.input} />
+                    <PasswordInput margin={"normal"} name="password" onChange={this._onChange} label="Password" variant="outlined" className={classes.input} />
+                    <Button type="submit" variant="contained" color="primary" disabled={this.state.isSubmitting} fullWidth>
+                        SIGN UP
+                    </Button>
                 </form>
             </SignUpPagesLayout>
         )
     }
+}
+
+function PasswordInput(props: TextFieldProps) {
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const showPasswordButton = (
+        <InputAdornment position="end">
+            <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseDown={(e) => {e.preventDefault();}}
+            >
+                {/* {showPassword ? <Visibility /> : <VisibilityOff />} */}
+                {showPassword ? "Hide" : "Show"}
+            </IconButton>
+        </InputAdornment>
+    )
+    
+    return (
+        <TextField type={showPassword ? "text" : "password"}  InputProps={{endAdornment: showPasswordButton}} {...props} />
+    )
 }
 
 const styles = createStyles({

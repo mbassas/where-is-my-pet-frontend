@@ -5,23 +5,23 @@ import SignUpMenu from "../SignupMenu";
 interface IProps {
     info?: string;
     isLoading?: boolean;
+    showTabs?: boolean;
     children: React.ReactNode;
 }
 
-function SignUpPagesLayout({ children, info, isLoading }: IProps) {
+function SignUpPagesLayout({ children, isLoading, showTabs = true }: IProps) {
     const classes = useStyles();
     return (
         <Container className={classes.container}>
             <h1 className={classes.title}>Welcome to Where is my pet?</h1>
             <Grid container justify="center">
                 <Grid component={Paper} xs={12} sm={10} md={6} item className={classes.wrapper}>
-                    <SignUpMenu />
+                    {showTabs && <SignUpMenu />}
                     {isLoading && (
                         <div className={classes.backdrop}>
                             <CircularProgress />
                         </div>
                     )}
-                    <p>{info}</p>
                     {children}
                 </Grid>
             </Grid>
@@ -44,7 +44,8 @@ const useStyles = makeStyles({
     },
     wrapper: {
         padding: "1em 1.2rem",
-        position: "relative"
+        position: "relative",
+        marginBottom: "50px"
     },
     backdrop: {
         display: "flex",

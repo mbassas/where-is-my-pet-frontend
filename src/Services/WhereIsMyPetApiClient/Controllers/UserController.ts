@@ -10,6 +10,25 @@ interface ISignUpParams {
 }
 
 class UsersController extends BaseController {
+    public ResetPassword(token: string, password: string) {
+        const url = "/users/reset-password";
+
+        return this.makeRequest<void>({
+            method: "POST",
+            url,
+            params: {token, newPassword: password}
+        })
+    }
+
+    public SendResetPassword( usernameOrEmail: string) {
+        const url = "/users/reset-password-email";
+
+        return this.makeRequest<void>({
+            method: "POST",
+            url,
+            params: { usernameOrEmail: usernameOrEmail }
+        })
+    }
 
     public SignUp(user: ISignUpParams) {
         const url = "/users/sign-up";
