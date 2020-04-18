@@ -49,7 +49,7 @@ function RecoverPasswordWithoutToken () {
             await $WhereIsMyPetApiClient.Users.SendResetPassword(usernameOrEmail);
             setSubmitSuccess(true);
         } catch (e) {
-            if (/Invalid Username or Email/.test(e.response.data)){
+            if (/Invalid Username or Email/.test(e?.response?.data)){
                 setInvalidParams(true);
                 return;
             }
