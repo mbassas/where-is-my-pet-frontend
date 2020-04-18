@@ -56,7 +56,7 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
                     </>
                 )}
                 <p>
-                    Additional info here.
+                    Sign up to upload an animal!
                 </p>
                 <form onSubmit={this._onSubmit}>
                     <TextField margin={"normal"} type="text" name="name" onChange={this._onChange} label="Name" variant="outlined" className={classes.input} />

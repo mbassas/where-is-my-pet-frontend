@@ -73,7 +73,7 @@ function RecoverPasswordWithoutToken () {
             <form onSubmit={onSubmit}>
                 <TextField
                     type="text"
-                    label="username"
+                    label="Username or Email"
                     onChange={(e) => setUsernameOrEmail(e.currentTarget.value)}
                     variant="outlined"
                     margin="normal"
