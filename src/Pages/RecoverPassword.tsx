@@ -49,7 +49,7 @@ function RecoverPasswordWithoutToken () {
             await $WhereIsMyPetApiClient.Users.SendResetPassword(usernameOrEmail);
             setSubmitSuccess(true);
         } catch (e) {
-            if (/Invalid Username or Email/.test(e.response.data)){
+            if (/Invalid Username or Email/.test(e?.response?.data)){
                 setInvalidParams(true);
                 return;
             }
@@ -73,7 +73,7 @@ function RecoverPasswordWithoutToken () {
             <form onSubmit={onSubmit}>
                 <TextField
                     type="text"
-                    label="username"
+                    label="Username or Email"
                     onChange={(e) => setUsernameOrEmail(e.currentTarget.value)}
                     variant="outlined"
                     margin="normal"

@@ -43,18 +43,18 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
                     </>
                 )}
                 <p>
-                    Additional info here.
+                    Enter your username and password to sign in:
                 </p>
                 <form onSubmit={this._onSubmit}>
-                    <TextField margin="normal" type="text" name="username" label="username" variant="outlined" className={classes.input} onChange={(event) => this.setState({ username: event.currentTarget.value })} />
-                    <TextField margin="normal" type="password" name="password" label="password" variant="outlined" className={classes.input} onChange={(event) => this.setState({ password: event.currentTarget.value })} />
+                    <TextField margin="normal" type="text" name="username" label="Username" variant="outlined" className={classes.input} onChange={(event) => this.setState({ username: event.currentTarget.value })} />
+                    <TextField margin="normal" type="password" name="password" label="Password" variant="outlined" className={classes.input} onChange={(event) => this.setState({ password: event.currentTarget.value })} />
 
                     <Button type="submit" variant="contained" color="primary" disabled={this.state.isSubmitting} fullWidth>
                         SIGN IN
                     </Button>
 
                     <div className={classes.forgotPassword}>
-                        <MuiLink component={Link} to="/recover-password">Forgot your password?</MuiLink>
+                        <MuiLink component={Link} to="/recover-password">Forgot your password? Click here.</MuiLink>
                     </div>
                 </form>
             </SignUpPagesLayout>

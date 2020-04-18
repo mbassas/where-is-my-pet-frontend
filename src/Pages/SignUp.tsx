@@ -3,6 +3,8 @@ import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyP
 import { TextField, Button, withStyles, WithStyles, createStyles, Snackbar, InputAdornment, IconButton, TextFieldProps } from '@material-ui/core';
 import { Alert } from "@material-ui/lab"
 import SignUpPagesLayout from '../Components/Layouts/SignUpPagesLayout';
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 interface IState {
     name: string;
@@ -56,7 +58,7 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
                     </>
                 )}
                 <p>
-                    Additional info here.
+                    Sign up to upload an animal!
                 </p>
                 <form onSubmit={this._onSubmit}>
                     <TextField margin={"normal"} type="text" name="name" onChange={this._onChange} label="Name" variant="outlined" className={classes.input} />
@@ -84,8 +86,7 @@ function PasswordInput(props: TextFieldProps) {
                 onClick={() => setShowPassword(!showPassword)}
                 onMouseDown={(e) => {e.preventDefault();}}
             >
-                {/* {showPassword ? <Visibility /> : <VisibilityOff />} */}
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
         </InputAdornment>
     )
