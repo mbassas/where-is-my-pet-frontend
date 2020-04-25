@@ -5,6 +5,7 @@ import { CssBaseline } from '@material-ui/core';
 import SignIn from './Pages/SignIn';
 import { Switch, Route, HashRouter as Router, Redirect } from 'react-router-dom';
 import RecoverPassword from './Pages/RecoverPassword';
+import UploadAnimal from './Pages/UploadAnimal';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,9 @@ ReactDOM.render(
         </Route>
         <Route path="/recover-password">
           <RecoverPassword />
+        </Route>
+        <Route path="/upload-animal">
+          <UploadAnimal />
         </Route>
         <Redirect to="/sign-in" />
       </Switch>
