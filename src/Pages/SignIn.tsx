@@ -25,6 +25,7 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
         this.setState({ isSubmitting: true });
         try {
             const response = await $WhereIsMyPetApiClient.Users.SignIn(this.state.username, this.state.password);
+            $WhereIsMyPetApiClient.setToken(response.data.token);
 
         } catch (e) {
             this.setState({ submitError: true })
@@ -46,8 +47,8 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
                     Enter your username and password to sign in:
                 </p>
                 <form onSubmit={this._onSubmit}>
-                    <TextField margin="normal" type="text" name="username" label="Username" variant="outlined" className={classes.input} onChange={(event) => this.setState({ username: event.currentTarget.value })} />
-                    <TextField margin="normal" type="password" name="password" label="Password" variant="outlined" className={classes.input} onChange={(event) => this.setState({ password: event.currentTarget.value })} />
+                    <TextField required margin="normal" type="text" name="username" label="Username" variant="outlined" className={classes.input} onChange={(event) => this.setState({ username: event.currentTarget.value })} />
+                    <TextField required margin="normal" type="password" name="password" label="Password" variant="outlined" className={classes.input} onChange={(event) => this.setState({ password: event.currentTarget.value })} />
 
                     <Button type="submit" variant="contained" color="primary" disabled={this.state.isSubmitting} fullWidth>
                         SIGN IN

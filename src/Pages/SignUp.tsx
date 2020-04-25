@@ -7,23 +7,27 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 interface IState {
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-    username: string;
-    password: string;
+    values: {
+        name: string;
+        surname: string;
+        email: string;
+        phone: string;
+        username: string;
+        password: string;
+    };
     isSubmitting: boolean;
     submitError: boolean;
 }
 class SignUp extends Component<WithStyles<typeof styles>, IState> {
     state: IState = {
-        name: "",
-        surname: "",
-        email: "",
-        phone: "",
-        username: "",
-        password: "",
+        values: {
+            name: "",
+            surname: "",
+            email: "",
+            phone: "",
+            username: "",
+            password: "",
+        },
         isSubmitting: false,
         submitError: false
     }
@@ -33,7 +37,7 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
 
         this.setState({ isSubmitting: true });
         try {
-            await $WhereIsMyPetApiClient.Users.SignUp(this.state);
+            await $WhereIsMyPetApiClient.Users.SignUp(this.state.values);
         } catch (e) {
             this.setState({ submitError: true })
         } finally {
@@ -44,7 +48,10 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
     _onChange = (event: ChangeEvent<HTMLInputElement>) => {
         // @ts-ignore
         this.setState({
-            [event.currentTarget.name]: event.currentTarget.value
+            values: {
+                ...this.state.values,
+                [event.currentTarget.name]: event.currentTarget.value,
+            }
         });
     }
     render() {
@@ -61,12 +68,12 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
                     Sign up to upload an animal!
                 </p>
                 <form onSubmit={this._onSubmit}>
-                    <TextField margin={"normal"} type="text" name="name" onChange={this._onChange} label="Name" variant="outlined" className={classes.input} />
-                    <TextField margin={"normal"} type="text" name="surname" onChange={this._onChange} label="Surname" variant="outlined" className={classes.input} />
-                    <TextField margin={"normal"} type="email" name="email" onChange={this._onChange} label="Email" variant="outlined" className={classes.input} />
-                    <TextField margin={"normal"} type="tel" name="phone" onChange={this._onChange} label="Mobile phone" variant="outlined" className={classes.input} />
-                    <TextField margin={"normal"} type="text" name="username" onChange={this._onChange} label="Username" variant="outlined" className={classes.input} />
-                    <PasswordInput margin={"normal"} name="password" onChange={this._onChange} label="Password" variant="outlined" className={classes.input} />
+                    <TextField required margin={"normal"} type="text" name="name" onChange={this._onChange} label="Name" variant="outlined" className={classes.input} />
+                    <TextField required margin={"normal"} type="text" name="surname" onChange={this._onChange} label="Surname" variant="outlined" className={classes.input} />
+                    <TextField required margin={"normal"} type="email" name="email" onChange={this._onChange} label="Email" variant="outlined" className={classes.input} />
+                    <TextField required margin={"normal"} type="tel" name="phone" onChange={this._onChange} label="Mobile phone" variant="outlined" className={classes.input} />
+                    <TextField required margin={"normal"} type="text" name="username" onChange={this._onChange} label="Username" variant="outlined" className={classes.input} />
+                    <PasswordInput required margin={"normal"} name="password" onChange={this._onChange} label="Password" variant="outlined" className={classes.input} />
                     <Button type="submit" variant="contained" color="primary" disabled={this.state.isSubmitting} fullWidth>
                         SIGN UP
                     </Button>
