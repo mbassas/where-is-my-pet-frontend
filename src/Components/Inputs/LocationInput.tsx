@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { getLocation, getAddress, getLatLon } from '../../Services/Geolocation/GeolocationService';
 interface IOwnProps {
     inputProps: TextFieldProps;
-    onChange?: (lat: number | null, lng: number | null) => void;
+    onChange?: (lat: number | null, lng: number | null, location: string) => void;
 }
 
 function LocationInput({ onChange = () => { }, inputProps }: IOwnProps) {
@@ -19,14 +19,16 @@ function LocationInput({ onChange = () => { }, inputProps }: IOwnProps) {
         }
         console.log(location);
         const { address, lat, lon } = location;
-        setValue(`${address.postcode} ${address.town}`);
 
-        onChange(parseFloat(lat), parseFloat(lon));
+        const newValue = `${address.postcode} ${address.town}`;
+        setValue(newValue);
+
+        onChange(parseFloat(lat), parseFloat(lon), newValue);
     }
 
     async function locateUsingValue() {
         if (!value) {
-            onChange(null, null);
+            onChange(null, null, "");
             return;
         }
         const location = await getLatLon(value);
@@ -35,9 +37,10 @@ function LocationInput({ onChange = () => { }, inputProps }: IOwnProps) {
         }
 
         const { lat, lon, display_name } = location;
-        setValue(display_name.split(',')[0]);
+        const newValue = display_name.split(',')[0];
+        setValue(newValue);
 
-        onChange(parseFloat(lat), parseFloat(lon));
+        onChange(parseFloat(lat), parseFloat(lon), newValue);
     }
 
     React.useEffect(() => { locateUser(); }, []);

@@ -40,6 +40,7 @@ export interface IAnimalFormValues {
     age: string;
     lat?: number;
     lng?: number;
+    location: string;
     images?: File;
 }
 
@@ -54,6 +55,7 @@ const initialValues: IAnimalFormValues = {
     age: "",
     lat: undefined,
     lng: undefined,
+    location: "",
     images: undefined,
 }
 
@@ -130,9 +132,10 @@ function UploadAnimalForm(/* {handleChange, handleBlur, values}: FormikProps<IAn
                     label: "Enter your town or postcode",
                     className: classes.locationInput
                 }}
-                onChange={(lat, lng) => {
+                onChange={(lat, lng, location) => {
                     setFieldValue("lat", lat);
                     setFieldValue("lng", lng);
+                    setFieldValue("location", location);
                 }}
             />
             <Button

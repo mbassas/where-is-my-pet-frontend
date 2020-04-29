@@ -6,6 +6,7 @@ import SignIn from './Pages/SignIn';
 import { Switch, Route, HashRouter as Router, Redirect } from 'react-router-dom';
 import RecoverPassword from './Pages/RecoverPassword';
 import UploadAnimal from './Pages/UploadAnimal';
+import ViewAnimal from './Pages/ViewAnimal';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,12 @@ ReactDOM.render(
         </Route>
         <Route path="/upload-animal">
           <UploadAnimal />
+        </Route>
+        <Route path="/view-animal/:id">
+          <div style={{display: "flex", marginTop: "30px", width: "100vw", alignContent: "center", justifyContent: "center"}}>
+
+            <ViewAnimal />
+          </div>
         </Route>
         <Redirect to="/sign-in" />
       </Switch>
