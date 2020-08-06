@@ -23,7 +23,11 @@ class WhereIsMyPetApiClient {
         this.token = token;
 
         localStorage.setItem("user_token", token);
+    }
 
+    public clearToken() {
+        localStorage.removeItem("user_token");
+        this.token = "";
     }
      
 }

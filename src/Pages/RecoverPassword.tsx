@@ -1,16 +1,9 @@
 import React, { FormEvent } from 'react';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import SignUpPagesLayout from '../Components/Layouts/SignUpPagesLayout';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, makeStyles, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useLocation } from 'react-router-dom';
 
-interface IState {
-    username: string,
-    password: string,
-    isSubmitting: boolean;
-    submitError: boolean;
-}
 
 function RecoverPassword() {
     const query = new URLSearchParams(useLocation().search);
@@ -31,6 +24,8 @@ function RecoverPasswordWithoutToken () {
     const [emptyField, setEmptyField] = React.useState<boolean>(false);
     const [invalidParams, setInvalidParams] = React.useState<boolean>(false);
     const [usernameOrEmail, setUsernameOrEmail] = React.useState<string>("");
+    const classes = useStyles();
+
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
@@ -59,7 +54,7 @@ function RecoverPasswordWithoutToken () {
         }
     }
     return (
-        <SignUpPagesLayout isLoading={isSubmitting} showTabs={false}>
+        <div className={classes.container}>
             <h2>
                 Reset your password
             </h2>
@@ -85,7 +80,12 @@ function RecoverPasswordWithoutToken () {
                     Send recover email
                 </Button>
             </form>
-        </SignUpPagesLayout>
+            {isSubmitting && (
+                <div className={classes.backdrop}>
+                    <CircularProgress />
+                </div>
+            )}
+        </div>
     )
 }
 
@@ -96,6 +96,7 @@ function RecoverPasswordWithToken({token}: {token: string}) {
     const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
     const [submitSuccess, setSubmitSuccess] = React.useState<boolean>(false);
     const [submitError, setSubmitError] = React.useState<boolean>(false);
+    const classes = useStyles();
     
     const onSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -123,7 +124,7 @@ function RecoverPasswordWithToken({token}: {token: string}) {
     }
 
     return (
-        <SignUpPagesLayout isLoading={isSubmitting} showTabs={false}>
+        <div className={classes.container}>
             <h2>
                 Reset your password
             </h2>
@@ -156,8 +157,32 @@ function RecoverPasswordWithToken({token}: {token: string}) {
                     Reset Password
                 </Button>
             </form>
-        </SignUpPagesLayout>
+            {isSubmitting && (
+                <div className={classes.backdrop}>
+                    <CircularProgress />
+                </div>
+            )}
+        </div>
     )
 }
+
+const useStyles = makeStyles(() => ({
+    container: {
+        position: "relative",
+    },
+    backdrop: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: "rgba(255, 255, 255, 0.5)",
+        zIndex: 1
+    }
+}))
+
 
 export default RecoverPassword;
