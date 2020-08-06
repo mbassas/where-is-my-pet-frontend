@@ -1,7 +1,7 @@
 import React, { Component, FormEvent } from 'react';
-import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import SignUpPagesLayout from '../Components/Layouts/SignUpPagesLayout';
-import { TextField, Button, withStyles, WithStyles, createStyles, Grid, Link as MuiLink } from '@material-ui/core';
+import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
+import SignUpPagesLayout from '../Layouts/SignUpPagesLayout';
+import { TextField, Button, withStyles, WithStyles, createStyles, Grid, Link as MuiLink, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,11 @@ interface IState {
     submitError: boolean;
 }
 
-class SignIn extends Component<WithStyles<typeof styles>, IState> {
+interface IProps extends WithStyles<typeof styles> {
+    onSuccess: () => void;
+}
+
+class SignIn extends Component<IProps, IState> {
     state: IState = {
         username: "",
         password: "",
@@ -26,7 +30,7 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
         try {
             const response = await $WhereIsMyPetApiClient.Users.SignIn(this.state.username, this.state.password);
             $WhereIsMyPetApiClient.setToken(response.data.token);
-
+            this.props.onSuccess()
         } catch (e) {
             this.setState({ submitError: true })
         } finally {
@@ -36,7 +40,7 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
     render() {
         const { classes } = this.props;
         return (
-            <SignUpPagesLayout isLoading={this.state.isSubmitting} >
+            <>
                 {this.state.submitError && (
                     <>
                         <Alert severity="error">Ups - Cannot create account!</Alert>
@@ -55,10 +59,17 @@ class SignIn extends Component<WithStyles<typeof styles>, IState> {
                     </Button>
 
                     <div className={classes.forgotPassword}>
-                        <MuiLink component={Link} to="/recover-password">Forgot your password? Click here.</MuiLink>
+                        <MuiLink component={Link} to="/recover-password" onClick={this.props.onSuccess}>
+                            Forgot your password? Click here.
+                        </MuiLink>
                     </div>
                 </form>
-            </SignUpPagesLayout>
+                {this.state.isSubmitting && (
+                    <div className={classes.backdrop}>
+                        <CircularProgress />
+                    </div>
+                )}
+            </>
         )
     }
 }
@@ -70,6 +81,18 @@ const styles = createStyles({
     forgotPassword: {
         marginTop: "10px",
         textAlign: "center"
+    },
+    backdrop: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: "rgba(255, 255, 255, 0.5)",
+        zIndex: 1
     }
 
 })

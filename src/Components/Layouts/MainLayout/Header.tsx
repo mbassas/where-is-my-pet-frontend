@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles } from '@material-ui/core';
 import MenuIcon from "@material-ui/icons/Menu";
-import { Link } from 'react-router-dom';
+import UserInfoButton from './UserInfoButton';
 
 function Header() {
 
@@ -9,7 +9,7 @@ function Header() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
@@ -17,7 +17,7 @@ function Header() {
                     <Typography variant="h6" className={classes.title}>
                         Where is my pet
                     </Typography>
-                    <Button color="inherit" component={Link} to="/sign-in">Login</Button>
+                    <UserInfoButton />
                 </Toolbar>
             </AppBar>
         </div>

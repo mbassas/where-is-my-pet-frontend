@@ -1,4 +1,5 @@
 import BaseController from "./BaseController";
+import $WhereIsMyPetApiClient from "../WhereIsMyPetApiClient";
 
 interface ISignUpParams {
     name: string;
@@ -7,6 +8,12 @@ interface ISignUpParams {
     phone: string;
     username: string;
     password: string;
+}
+
+export interface IUser {
+    username: string;
+    name: string;
+    surname: string;
 }
 
 class UsersController extends BaseController {
@@ -48,6 +55,20 @@ class UsersController extends BaseController {
             url,
             params: { username, password }
         });
+    }
+
+    public async GetUserInfo() {
+        const token = $WhereIsMyPetApiClient.getToken();
+
+        if (!token) {
+            return null;
+        }
+
+        return this.makeRequest<IUser>({
+            method: "GET",
+            url: "/users"
+        });
+
     }
 
 }

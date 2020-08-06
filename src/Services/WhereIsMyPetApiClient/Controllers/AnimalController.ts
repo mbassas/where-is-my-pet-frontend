@@ -14,12 +14,23 @@ export interface IAnimal {
     gender: EAnimalGender;
     age: string;
     publication_date: string;
+    location: string;
     lat: number;
     lng: number;
     image_name: string;
 
 }
+
+export interface IGetAnimalsParams {
+        start?: number;
+        count?: number;
+
+}
+
 class AnimalsController extends BaseController {
+    public LocationImage(id: number): string {
+        return `${Config.BASE_URL}/animals/${id}/location.png`
+    }
 
     public UploadAnimal(animal: IAnimalFormValues) {
         const url = "/animals";
@@ -33,7 +44,7 @@ class AnimalsController extends BaseController {
         });
 
 
-        return this.makeRequest<void>({
+        return this.makeRequest<{id: number}>({
             method: "POST",
             url,
             params: data,
@@ -49,6 +60,14 @@ class AnimalsController extends BaseController {
 
     public Image(id: number, imageName: string): string {
         return `${Config.BASE_URL}/animals/${id}/${imageName}.png`;
+    }
+
+    public GetAnimals (params?: IGetAnimalsParams) {
+        return this.makeRequest <IAnimal[]>({
+            method: "GET",
+            url: `/animals`,
+            params,
+        });
     }
 
 }

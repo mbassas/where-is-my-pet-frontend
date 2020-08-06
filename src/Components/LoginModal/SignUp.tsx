@@ -1,8 +1,8 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react';
-import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import { TextField, Button, withStyles, WithStyles, createStyles, Snackbar, InputAdornment, IconButton, TextFieldProps } from '@material-ui/core';
+import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
+import { TextField, Button, withStyles, WithStyles, createStyles, Snackbar, InputAdornment, IconButton, TextFieldProps, CircularProgress } from '@material-ui/core';
 import { Alert } from "@material-ui/lab"
-import SignUpPagesLayout from '../Components/Layouts/SignUpPagesLayout';
+import SignUpPagesLayout from '../Layouts/SignUpPagesLayout';
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
@@ -18,7 +18,11 @@ interface IState {
     isSubmitting: boolean;
     submitError: boolean;
 }
-class SignUp extends Component<WithStyles<typeof styles>, IState> {
+
+interface IProps extends WithStyles<typeof styles> {
+    onSuccess: () => void;
+}
+class SignUp extends Component<IProps, IState> {
     state: IState = {
         values: {
             name: "",
@@ -37,7 +41,9 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
 
         this.setState({ isSubmitting: true });
         try {
-            await $WhereIsMyPetApiClient.Users.SignUp(this.state.values);
+            const response = await $WhereIsMyPetApiClient.Users.SignUp(this.state.values);
+            $WhereIsMyPetApiClient.setToken(response.data.token);
+            this.props.onSuccess();
         } catch (e) {
             this.setState({ submitError: true })
         } finally {
@@ -57,7 +63,7 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
     render() {
         const { classes } = this.props;
         return (
-            <SignUpPagesLayout isLoading={this.state.isSubmitting}>
+            <>
                 {this.state.submitError && (
                     <>
                         <Alert severity="error">Ups - Cannot create account!</Alert>
@@ -78,7 +84,12 @@ class SignUp extends Component<WithStyles<typeof styles>, IState> {
                         SIGN UP
                     </Button>
                 </form>
-            </SignUpPagesLayout>
+                {this.state.isSubmitting && (
+                    <div className={classes.backdrop}>
+                        <CircularProgress />
+                    </div>
+                )}
+            </>
         )
     }
 }
@@ -113,6 +124,18 @@ const styles = createStyles({
     },
     input: {
         width: "100%",
+    },
+    backdrop: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: "rgba(255, 255, 255, 0.5)",
+        zIndex: 1
     }
 
 })

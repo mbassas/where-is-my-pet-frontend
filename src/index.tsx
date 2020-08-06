@@ -1,38 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SignUp from './Pages/SignUp';
 import { CssBaseline } from '@material-ui/core';
-import SignIn from './Pages/SignIn';
 import { Switch, Route, HashRouter as Router, Redirect } from 'react-router-dom';
 import RecoverPassword from './Pages/RecoverPassword';
 import UploadAnimal from './Pages/UploadAnimal';
 import ViewAnimal from './Pages/ViewAnimal';
+import ViewAnimals from './Pages/ViewAnimals';
+import MainLayout from './Components/Layouts/MainLayout/MainLayout';
+import PrivatePage from './Components/Layouts/PrivatePage';
+import AuthenticationProvider from './Components/Authentication';
 
 ReactDOM.render(
   <React.StrictMode>
     <CssBaseline />
     <Router>
-      <Switch>
-        <Route path="/sign-in">
-          <SignIn />
-        </Route>
-        <Route path="/sign-up">
-          <SignUp />
-        </Route>
-        <Route path="/recover-password">
-          <RecoverPassword />
-        </Route>
-        <Route path="/upload-animal">
-          <UploadAnimal />
-        </Route>
-        <Route path="/view-animal/:id">
-          <div style={{display: "flex", marginTop: "30px", width: "100vw", alignContent: "center", justifyContent: "center"}}>
-
-            <ViewAnimal />
-          </div>
-        </Route>
-        <Redirect to="/sign-in" />
-      </Switch>
+      <AuthenticationProvider>
+        <MainLayout>
+          <Switch>
+            <Route path="/recover-password">
+              <RecoverPassword />
+            </Route>
+            <PrivatePage path="/upload-animal">
+              <UploadAnimal />
+            </PrivatePage>
+            <Route path="/view-animal/:id">
+              <ViewAnimal />
+            </Route>
+            <Route path="/">
+              <ViewAnimals />
+            </Route>
+            <Redirect to="/" />
+          </Switch>
+        </MainLayout>
+      </AuthenticationProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

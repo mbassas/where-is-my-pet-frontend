@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, FormikBag, FormikHelpers, FormikConfig, Form, FormikProps, useFormikContext, Field, ErrorMessage } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, CircularProgress } from '@material-ui/core';
 import LocationInput from '../Inputs/LocationInput';
 import SpeciesInput from './Fields/SpeciesInput';
 import AnimalStatusInput from './Fields/StatusInput';
@@ -10,6 +10,7 @@ import SizeInput from './Fields/SizeInput';
 import AnimalImageInput from './Fields/AnimalImageInput';
 import AnimalGenderInput from './Fields/AnimalGenderInput';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
+import { Redirect } from 'react-router-dom';
 
 export enum EAnimalStatus {
     LOST = "LOST",
@@ -60,9 +61,11 @@ const initialValues: IAnimalFormValues = {
 }
 
 function UploadAnimalFormContainer() {
+    const [createdAnimalId, setCreatedAnimalId] = React.useState(-1);
     async function onSubmit(values: IAnimalFormValues, { setSubmitting }: FormikHelpers<IAnimalFormValues>) {
         try {
-            await $WhereIsMyPetApiClient.Animals.UploadAnimal(values);
+            const response = await $WhereIsMyPetApiClient.Animals.UploadAnimal(values);
+            setCreatedAnimalId(response.data.id);
         } catch{
 
         } finally {
@@ -84,6 +87,7 @@ function UploadAnimalFormContainer() {
     }
 
     return (
+        <>
         <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}
@@ -91,6 +95,10 @@ function UploadAnimalFormContainer() {
         >
             <UploadAnimalForm />
         </Formik>
+        {createdAnimalId !== -1 && (
+            <Redirect to={`/view-animal/${createdAnimalId}`}/>
+        )}
+        </>
     );
 }
 
@@ -147,6 +155,11 @@ function UploadAnimalForm(/* {handleChange, handleBlur, values}: FormikProps<IAn
             >
                 UPLOAD
             </Button>
+            {isSubmitting && (
+                <div className={classes.backdrop}>
+                    <CircularProgress />
+                </div>
+            )}
         </Form>
     );
 }
@@ -181,6 +194,18 @@ const useStyles = makeStyles((theme) => ({
             gridRow: "span 5",
         }
     },
+    backdrop: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        background: "rgba(255, 255, 255, 0.5)",
+        zIndex: 1
+    }
 
 }))
 export default UploadAnimalFormContainer;
