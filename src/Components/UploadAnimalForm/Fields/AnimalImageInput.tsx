@@ -4,15 +4,16 @@ import AddPhotoIcon from "@material-ui/icons/AddAPhotoOutlined"
 import { useFormikContext } from 'formik';
 import { IAnimalFormValues } from '../UploadAnimalForm';
 interface IProps {
-    className: string;
+    className?: string;
+    onChange?: (image: File, image_preview: string) => void;
 }
-function AnimalImageInput({className}: IProps) {
+function AnimalImageInput({className = "", onChange}: IProps) {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const classes = useStyles();
     const [preview, setPreview] = React.useState<string>("");
-    const {setFieldValue} = useFormikContext<IAnimalFormValues>();
+   // const {setFieldValue} = useFormikContext<IAnimalFormValues>();
 
-    function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    function onChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault();
 
         if (!e.target.files?.length) {
@@ -25,8 +26,12 @@ function AnimalImageInput({className}: IProps) {
         reader.onloadend = () => {
             if (typeof reader.result === "string") {
                 setPreview(reader.result);
-
-                setFieldValue("images", file);
+                if (onChange) {
+                    onChange(file, reader.result);
+                }
+                
+           //     setFieldValue("images", file);
+                
             }
         }
         
@@ -45,11 +50,11 @@ function AnimalImageInput({className}: IProps) {
                 )}
             </div>
             <input 
-                onChange={onChange}
+                onChange={onChangeImage}
                 ref={inputRef}
                 className={classes.input}
                 type="file"
-                accept="image/*" 
+                accept="image/*"
             />
         </div>
     )

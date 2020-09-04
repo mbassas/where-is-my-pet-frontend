@@ -10,6 +10,7 @@ interface IProps {
 function BreedInput({species}: IProps) {
     const [breeds, setBreeds] = React.useState<string[]>([]);
     const {values, handleChange} = useFormikContext<IAnimalFormValues>();
+    const inputRef = React.useRef<HTMLInputElement>();
     const classes = useStyles();
     
     React.useEffect(() => {
@@ -18,15 +19,16 @@ function BreedInput({species}: IProps) {
         }
         
         $WhereIsMyPetApiClient.Breeds.Get(species)
-            .then(({ data }) => setBreeds(data.sort()));
+            .then(({ data }) => setBreeds(data.sort()));            
     }, [species])
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel htmlFor="outlined-age-native-simple">Breed</InputLabel>
             <Select
+                ref={inputRef}
                 native
-                value={values.breed}
+                value={breeds.length > 0 ? values.breed : ""}
                 onChange={handleChange}
                 label="Breed"
                 inputProps={{

@@ -11,6 +11,8 @@ import AnimalImageInput from './Fields/AnimalImageInput';
 import AnimalGenderInput from './Fields/AnimalGenderInput';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import { Redirect } from 'react-router-dom';
+import { IAnimal } from '../../Services/WhereIsMyPetApiClient/Controllers/AnimalController';
+import AnimalImagePreview from './AnimalImagePreview';
 
 export enum EAnimalStatus {
     LOST = "LOST",
@@ -45,7 +47,7 @@ export interface IAnimalFormValues {
     images?: File;
 }
 
-const initialValues: IAnimalFormValues = {
+const defaultInitialValues: IAnimalFormValues = {
     status: EAnimalStatus.FOUND,
     species: "",
     breed: "",
@@ -60,7 +62,11 @@ const initialValues: IAnimalFormValues = {
     images: undefined,
 }
 
-function UploadAnimalFormContainer() {
+interface IProps {
+    initialValues: Partial<IAnimalFormValues>;
+}
+
+function UploadAnimalFormContainer({initialValues}: IProps) {
     const [createdAnimalId, setCreatedAnimalId] = React.useState(-1);
     async function onSubmit(values: IAnimalFormValues, { setSubmitting }: FormikHelpers<IAnimalFormValues>) {
         try {
@@ -89,7 +95,7 @@ function UploadAnimalFormContainer() {
     return (
         <>
         <Formik
-            initialValues={initialValues}
+            initialValues={{...defaultInitialValues, ...initialValues}}
             onSubmit={onSubmit}
             validate={validate}
         >
@@ -110,7 +116,7 @@ function UploadAnimalForm(/* {handleChange, handleBlur, values}: FormikProps<IAn
             <AnimalStatusInput className={classes.statusInput} />
             <SpeciesInput />
             <BreedInput species={values.species} />
-            <AnimalImageInput className={classes.animalImageInput} />
+            <AnimalImagePreview className={classes.animalImageInput} />
             <SizeInput />
             <Field
                 component={TextField}
