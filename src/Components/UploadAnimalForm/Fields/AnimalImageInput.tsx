@@ -11,7 +11,6 @@ function AnimalImageInput({className = "", onChange}: IProps) {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const classes = useStyles();
     const [preview, setPreview] = React.useState<string>("");
-   // const {setFieldValue} = useFormikContext<IAnimalFormValues>();
 
     function onChangeImage(e: React.ChangeEvent<HTMLInputElement>) {
         e.preventDefault();
@@ -29,8 +28,6 @@ function AnimalImageInput({className = "", onChange}: IProps) {
                 if (onChange) {
                     onChange(file, reader.result);
                 }
-                
-           //     setFieldValue("images", file);
                 
             }
         }

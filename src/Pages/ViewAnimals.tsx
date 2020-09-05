@@ -1,30 +1,15 @@
 import React from 'react';
-import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import { IAnimal } from '../Services/WhereIsMyPetApiClient/Controllers/AnimalController';
-import AnimalCard from '../Components/AnimalCard';
 import { makeStyles, Tooltip, Fab } from '@material-ui/core';
 import CameraOutlined from "@material-ui/icons/AddAPhotoOutlined";
 import { Link } from 'react-router-dom';
+import AnimalList from '../Components/Animals/AnimalList';
 
 function ViewAnimals() {
     const classes = useStyles();
-    const [animals, setAnimals] = React.useState<IAnimal[]>();
-    React.useEffect(() => {
-        $WhereIsMyPetApiClient.Animals.GetAnimals()
-            .then(({ data }) => setAnimals(data));
-    }, []);
-
-    if (!animals) {
-        return null;
-    }
 
     return (
         <>
-            <div className={classes.list}>
-                {
-                    animals.map(((animal) => <AnimalCard key={`animal_${animal.id}`} {...animal} />))
-                }
-            </div>
+            <AnimalList />
             <Tooltip title="Upload an animal" aria-label="Upload an animal">
                 <Fab color="primary" className={classes.fab} component={Link} to="/upload-animal">
                     <CameraOutlined />

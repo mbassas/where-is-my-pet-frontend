@@ -24,7 +24,10 @@ export interface IAnimal {
 export interface IGetAnimalsParams {
         start?: number;
         count?: number;
-
+        species?: string;
+        breed?: string;
+        lat?: number;
+        lng?: number;
 }
 
 class AnimalsController extends BaseController {
@@ -63,10 +66,11 @@ class AnimalsController extends BaseController {
     }
 
     public GetAnimals (params?: IGetAnimalsParams) {
+        console.log(params);
         return this.makeRequest <IAnimal[]>({
             method: "GET",
             url: `/animals`,
-            params,
+            queryParams: params,
         });
     }
 

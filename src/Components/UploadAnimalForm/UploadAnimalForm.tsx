@@ -48,7 +48,7 @@ export interface IAnimalFormValues {
 }
 
 const defaultInitialValues: IAnimalFormValues = {
-    status: EAnimalStatus.FOUND,
+    status: EAnimalStatus.LOST,
     species: "",
     breed: "",
     size: EAnimalSize.EMPTY,

@@ -1,46 +1,79 @@
 import React from 'react';
-import UploadAnimalFormContainer, { IAnimalFormValues } from '../Components/UploadAnimalForm/UploadAnimalForm';
 import AnimalImageInput from '../Components/UploadAnimalForm/Fields/AnimalImageInput';
+import UploadAnimalFormContainer, { IAnimalFormValues } from '../Components/UploadAnimalForm/UploadAnimalForm';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { CircularProgress, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+import AnimalList from '../Components/Animals/AnimalList';
+import useAnimals from '../Hooks/useAnimals';
 
 function UploadAnimal() {
-    const [formInitialValues, setFormInitialValues] = React.useState<Partial<IAnimalFormValues> | null>(null);
+    const [formInitialValues, setFormInitialValues] = React.useState<Partial<IAnimalFormValues>>();
     const [isSubmitting, setIsSubmitting]= React.useState(false);
+    const [showUploadForm, setShowUploadForm] = React.useState(false);
+    const {animals, isLoading} = useAnimals(formInitialValues);
     const classes = useStyles();
 
     async function onChange(image: File) {
         setIsSubmitting(true);
         try {
             const response = await $WhereIsMyPetApiClient.ImageRecognition.UploadAnimalImage(image);
-            setFormInitialValues({...response.data, images: image});
+            setFormInitialValues({
+                ...response.data,
+                images: image
+            });
         } catch{
 
         } finally {
             setIsSubmitting(false);
-        }        
+        }          
     }
-    if (!formInitialValues) {
+    if (!formInitialValues || !animals || isLoading) {
         return (
             <>
-            <AnimalImageInput
-                onChange={onChange}
-            />
-            {isSubmitting && (
-                <div className={classes.backdrop}>
-                    <CircularProgress />
-                </div>
-            )}
+                <AnimalImageInput
+                    onChange={onChange}
+                />
+                {(isSubmitting || isLoading) && (
+                    <div className={classes.backdrop}>
+                        <CircularProgress />
+                    </div>
+                )}
             </>
         );
     }
+
+    if (showUploadForm || (animals?.length === 0 && !isLoading)) {
+        return (
+            <UploadAnimalFormContainer initialValues={formInitialValues} />
+        )
+    }
+
     return (
-        <UploadAnimalFormContainer initialValues={formInitialValues} />
+        <>
+            <div>
+                Es alguno de estos?
+
+                <Button 
+                    color="primary"
+                    variant="contained"
+                    onClick={()  => setShowUploadForm(true)}
+                >
+                    No
+                </Button>
+
+            </div>
+            <AnimalList 
+                filters={{
+                    breed: formInitialValues.breed,
+                    species: formInitialValues.species
+                }}
+            />
+        </>
     )
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
     backdrop: {
         display: "flex",
         justifyContent: "center",
@@ -52,8 +85,7 @@ const useStyles = makeStyles({
         height: "100%",
         background: "rgba(255, 255, 255, 0.5)",
         zIndex: 1
-    }
-
-})
+    },
+}))
 
 export default UploadAnimal;

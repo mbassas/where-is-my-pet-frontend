@@ -6,6 +6,7 @@ interface IMakeRequestParams {
     method: "GET" | "POST";
     url: string;
     params?: object;
+    queryParams?: object;
     headers?: object;
 }
 
@@ -22,11 +23,12 @@ abstract class BaseController {
         };
     }
 
-    protected makeRequest<T = any>({ method, params = {}, headers = {}, url }: IMakeRequestParams) {
+    protected makeRequest<T = any>({ method, params = {}, headers = {}, url, queryParams = {} }: IMakeRequestParams) {
         return axios.request<T>({
             method,
             url: `${Config.BASE_URL}${url}`,
             data: params,
+            params: queryParams,
             headers: {
                 ...headers,
                 ...this.authHeader()

@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextFieldProps, IconButton, InputAdornment, TextField, Tooltip } from '@material-ui/core';
 import GpsFixed from '@material-ui/icons/GpsFixed'
-import Axios from 'axios';
 import { getLocation, getAddress, getLatLon } from '../../Services/Geolocation/GeolocationService';
 interface IOwnProps {
     inputProps: TextFieldProps;
