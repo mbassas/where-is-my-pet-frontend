@@ -11,6 +11,8 @@ function useAnimals(filters?: IAnimalFilters) {
     const [animals, setAnimals] = React.useState<IAnimal[]>();
     const [isLoading, setIsLoading] = React.useState(false);
 
+    const breed = filters?.breed;
+    const species = filters?.species;
     React.useEffect(() => {
         if (!filters) {
             return;
@@ -18,14 +20,14 @@ function useAnimals(filters?: IAnimalFilters) {
         setIsLoading(true);
 
         $WhereIsMyPetApiClient.Animals.GetAnimals({
-            breed: filters.breed,
-            species: filters.species,
+            breed: breed,
+            species: species,
         }).then(({ data }) => {
             setAnimals(data);
         }).finally(() => {
             setIsLoading(false);
         });
-    }, [filters]);
+    }, [breed, species]);
 
     return {
         animals,
