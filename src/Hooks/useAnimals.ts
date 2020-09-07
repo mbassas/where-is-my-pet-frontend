@@ -1,10 +1,12 @@
 import * as React from "react";
 import { IAnimal } from "../Services/WhereIsMyPetApiClient/Controllers/AnimalController";
 import $WhereIsMyPetApiClient from "../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient";
+import { EAnimalStatus } from "../Components/UploadAnimalForm/UploadAnimalForm";
 
 export interface IAnimalFilters {
     species?: string;
     breed?: string;
+    status?: EAnimalStatus;
 }
 
 function useAnimals(filters?: IAnimalFilters) {

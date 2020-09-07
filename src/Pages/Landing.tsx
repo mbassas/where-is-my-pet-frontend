@@ -1,5 +1,4 @@
 import React from 'react';
-import MainLayout from '../Components/Layouts/MainLayout/MainLayout';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
@@ -53,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
        color: theme.palette.secondary.contrastText,
     },
     container: {
+        minHeight: "100%",
         display: "grid",
         placeContent: "center",
         gridTemplateColumns: "repeat(1, 250px)",

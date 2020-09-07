@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { IAnimal } from '../Services/WhereIsMyPetApiClient/Controllers/AnimalController';
-import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles, Button, CardActions } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles } from '@material-ui/core';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import moment from 'moment';
 import CalendarToday from '@material-ui/icons/CalendarTodayOutlined';
@@ -108,7 +108,8 @@ const useStyles = makeStyles(theme => ({
     root: {
         position: "relative",
         overflow: "visible",
-        width: "100%"
+        width: "100%",
+        marginTop: "20px",
     },
     animalBadge: {
         height: 64,

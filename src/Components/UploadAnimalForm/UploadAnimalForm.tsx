@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik, FormikBag, FormikHelpers, FormikConfig, Form, FormikProps, useFormikContext, Field, ErrorMessage } from 'formik';
+import { Formik, FormikHelpers, Form, useFormikContext, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { Button, makeStyles, CircularProgress } from '@material-ui/core';
 import LocationInput from '../Inputs/LocationInput';
@@ -7,11 +7,9 @@ import SpeciesInput from './Fields/SpeciesInput';
 import AnimalStatusInput from './Fields/StatusInput';
 import BreedInput from './Fields/BreedInput';
 import SizeInput from './Fields/SizeInput';
-import AnimalImageInput from './Fields/AnimalImageInput';
 import AnimalGenderInput from './Fields/AnimalGenderInput';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import { Redirect } from 'react-router-dom';
-import { IAnimal } from '../../Services/WhereIsMyPetApiClient/Controllers/AnimalController';
 import AnimalImagePreview from './AnimalImagePreview';
 
 export enum EAnimalStatus {

@@ -66,7 +66,6 @@ class AnimalsController extends BaseController {
     }
 
     public GetAnimals (params?: IGetAnimalsParams) {
-        console.log(params);
         return this.makeRequest <IAnimal[]>({
             method: "GET",
             url: `/animals`,

@@ -1,7 +1,6 @@
 import React, { Component, FormEvent } from 'react';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import SignUpPagesLayout from '../Layouts/SignUpPagesLayout';
-import { TextField, Button, withStyles, WithStyles, createStyles, Grid, Link as MuiLink, CircularProgress } from '@material-ui/core';
+import { TextField, Button, withStyles, WithStyles, createStyles, Link as MuiLink, CircularProgress } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
 

@@ -1,8 +1,6 @@
 import * as React from "react";
 import AnimalCard from "../AnimalCard";
 import { makeStyles } from "@material-ui/core";
-import { IAnimal } from "../../Services/WhereIsMyPetApiClient/Controllers/AnimalController";
-import $WhereIsMyPetApiClient from "../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient";
 import useAnimals, { IAnimalFilters } from "../../Hooks/useAnimals";
 
 interface IProps {

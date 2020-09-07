@@ -30,7 +30,11 @@ function MainLayout({children}: IProps) {
 
 const useStyles = makeStyles(theme => ({
     container: {
-        paddingTop: 100,
+        paddingTop: 60,
+        minHeight: "100vh",
+        [theme.breakpoints.up("sm")]: {
+            paddingTop: 70
+        }
     }
 }))
 

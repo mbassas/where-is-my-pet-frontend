@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, makeStyles, Theme, createStyles } from '@material-ui/core';
 import MenuIcon from "@material-ui/icons/Menu";
 import UserInfoButton from './UserInfoButton';
 import { Link } from 'react-router-dom';

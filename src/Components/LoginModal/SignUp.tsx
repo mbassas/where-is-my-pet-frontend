@@ -1,8 +1,7 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import { TextField, Button, withStyles, WithStyles, createStyles, Snackbar, InputAdornment, IconButton, TextFieldProps, CircularProgress } from '@material-ui/core';
-import { Alert } from "@material-ui/lab"
-import SignUpPagesLayout from '../Layouts/SignUpPagesLayout';
+import { TextField, Button, withStyles, WithStyles, createStyles, InputAdornment, IconButton, TextFieldProps, CircularProgress } from '@material-ui/core';
+import { Alert } from "@material-ui/lab";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 

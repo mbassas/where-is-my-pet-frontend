@@ -1,8 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import AddPhotoIcon from "@material-ui/icons/AddAPhotoOutlined"
-import { useFormikContext } from 'formik';
-import { IAnimalFormValues } from '../UploadAnimalForm';
+import AddPhotoIcon from "@material-ui/icons/AddAPhotoOutlined";
+
 interface IProps {
     className?: string;
     onChange?: (image: File, image_preview: string) => void;
@@ -65,11 +64,11 @@ const useStyles = makeStyles((theme) => ({
     wrapper: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center"
     },
     previewWrapper: {
         width: "100%",
-        height: "24rem",
-        flexGrow: 1,
+        height: "24rem",        
         border: `1px dashed ${theme.palette.divider}`,
         borderRadius: theme.shape.borderRadius,
         display: "flex",
