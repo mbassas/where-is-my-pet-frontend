@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { IAnimal } from '../Services/WhereIsMyPetApiClient/Controllers/AnimalController';
-import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles, Button, CardActions } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles } from '@material-ui/core';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import moment from 'moment';
 import CalendarToday from '@material-ui/icons/CalendarTodayOutlined';
@@ -32,7 +32,7 @@ function AnimalCard(props: IProps) {
                     <div className={classes.chips}>
                         <Chip icon={<Pets />} label={props.status} color={props.status == "LOST" ? "secondary" : "primary"} />
                         <Chip icon={<CalendarToday />} label={moment(props.publication_date).local().fromNow()} />
-                        <Chip icon={<LocationOn />} label={props.location} />
+                        <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
 
                     </div>
                 </CardMedia>
@@ -51,7 +51,9 @@ function AnimalCard(props: IProps) {
                                 window.open(`http://maps.google.com/maps?q=loc:${props.lat},${props.lng}`);
                             }}
                         />
-                        <div>{props.location}</div>
+                        <div>
+                            {props.location}
+                        </div>
                     </div>
 
                     <div>
@@ -108,7 +110,8 @@ const useStyles = makeStyles(theme => ({
     root: {
         position: "relative",
         overflow: "visible",
-        width: "100%"
+        width: "100%",
+        marginTop: "20px",
     },
     animalBadge: {
         height: 64,

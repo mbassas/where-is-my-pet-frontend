@@ -1,49 +1,69 @@
 import React from 'react';
 import { TextFieldProps, IconButton, InputAdornment, TextField, Tooltip } from '@material-ui/core';
-import GpsFixed from '@material-ui/icons/GpsFixed'
-import Axios from 'axios';
+import GpsFixed from '@material-ui/icons/GpsFixed';
 import { getLocation, getAddress, getLatLon } from '../../Services/Geolocation/GeolocationService';
 interface IOwnProps {
-    inputProps: TextFieldProps;
+    inputProps?: TextFieldProps;
+    autolocate?: boolean;
     onChange?: (lat: number | null, lng: number | null, location: string) => void;
+    value?: {lat: number, lng: number}; 
 }
 
-function LocationInput({ onChange = () => { }, inputProps }: IOwnProps) {
-    const [value, setValue] = React.useState("");
+function LocationInput({ onChange = () => { }, inputProps, value, autolocate = true }: IOwnProps) {
+    const [displayValue, setDisplayValue] = React.useState("");
 
     async function locateUser() {
         const currentLocation = await getLocation();
-        const location = await getAddress(currentLocation.coords.latitude, currentLocation.coords.longitude);
+        if(!currentLocation) {
+            return;
+        }
+        await locateCoord(currentLocation.coords.latitude, currentLocation.coords.longitude);
+    }
+
+    async function locateCoord(lat: number, lng: number) {
+        const location = await getAddress(lat, lng);
         if (!location) {
             return;
         }
         console.log(location);
-        const { address, lat, lon } = location;
 
-        const newValue = `${address.postcode} ${address.town}`;
-        setValue(newValue);
+        const newValue = `${location.address.postcode} ${location.address.town}`;
+        setDisplayValue(newValue);
 
-        onChange(parseFloat(lat), parseFloat(lon), newValue);
+        onChange(parseFloat(location.lat), parseFloat(location.lon), newValue);
     }
 
     async function locateUsingValue() {
-        if (!value) {
+        if (!displayValue) {
             onChange(null, null, "");
             return;
         }
-        const location = await getLatLon(value);
+        const location = await getLatLon(displayValue);
         if (!location) {
             return;
         }
 
         const { lat, lon, display_name } = location;
         const newValue = display_name.split(',')[0];
-        setValue(newValue);
+        setDisplayValue(newValue);
 
         onChange(parseFloat(lat), parseFloat(lon), newValue);
     }
 
-    React.useEffect(() => { locateUser(); }, []);
+    React.useEffect(() => { 
+        if (autolocate) {
+            locateUser(); 
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if (!value) {
+            setDisplayValue("");
+            return;
+        }
+
+        locateCoord(value.lat, value.lng);
+    }, [value?.lat, value?.lng])
 
 
     const locationButton = (
@@ -66,8 +86,8 @@ function LocationInput({ onChange = () => { }, inputProps }: IOwnProps) {
             type={"text"}
             InputProps={{ endAdornment: locationButton }}
             {...inputProps}
-            value={value}
-            onChange={(e) => setValue(e.currentTarget.value)}
+            value={displayValue}
+            onChange={(e) => setDisplayValue(e.currentTarget.value)}
             onBlur={locateUsingValue}
             variant="outlined"
         />

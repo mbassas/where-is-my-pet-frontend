@@ -1,8 +1,9 @@
 import React, { FormEvent } from 'react';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import { TextField, Button, makeStyles, CircularProgress } from '@material-ui/core';
+import { TextField, Button, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useLocation } from 'react-router-dom';
+import Loader from '../Components/Loader';
 
 
 function RecoverPassword() {
@@ -80,11 +81,7 @@ function RecoverPasswordWithoutToken () {
                     Send recover email
                 </Button>
             </form>
-            {isSubmitting && (
-                <div className={classes.backdrop}>
-                    <CircularProgress />
-                </div>
-            )}
+            {isSubmitting && <Loader />}
         </div>
     )
 }
@@ -157,11 +154,7 @@ function RecoverPasswordWithToken({token}: {token: string}) {
                     Reset Password
                 </Button>
             </form>
-            {isSubmitting && (
-                <div className={classes.backdrop}>
-                    <CircularProgress />
-                </div>
-            )}
+            {isSubmitting && <Loader />}
         </div>
     )
 }
@@ -169,18 +162,6 @@ function RecoverPasswordWithToken({token}: {token: string}) {
 const useStyles = makeStyles(() => ({
     container: {
         position: "relative",
-    },
-    backdrop: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "rgba(255, 255, 255, 0.5)",
-        zIndex: 1
     }
 }))
 

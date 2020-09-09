@@ -6,11 +6,13 @@ interface IAuthenticationContextValues {
     userLoading: boolean;
     userInfo: IUser | null;
     loadUserData: () => void;
+    logout: () => void;
 }
 
 export const AuthenticationContext = React.createContext<IAuthenticationContextValues>({
     userInfo: null,
     loadUserData: () => {},
+    logout: () => {},
     userLoading: false
 });
 
@@ -28,12 +30,17 @@ function AuthenticationProvider ({children}: {children: React.ReactNode}) {
         setUserLoading(false);
         setUserInfo(userInfo?.data || null)
     }
+    function logout() {
+        $WhereIsMyPetApiClient.clearToken();
+        loadUserData();
+    }
     return (
         <AuthenticationContext.Provider 
             value={{
                 userLoading,
                 userInfo,
                 loadUserData,
+                logout,
             }}
         >
             {children}

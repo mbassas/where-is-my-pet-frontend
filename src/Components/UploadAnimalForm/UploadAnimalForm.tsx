@@ -1,16 +1,17 @@
 import React from 'react';
-import { Formik, FormikBag, FormikHelpers, FormikConfig, Form, FormikProps, useFormikContext, Field, ErrorMessage } from 'formik';
+import { Formik, FormikHelpers, Form, useFormikContext, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Button, makeStyles, CircularProgress } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import LocationInput from '../Inputs/LocationInput';
 import SpeciesInput from './Fields/SpeciesInput';
 import AnimalStatusInput from './Fields/StatusInput';
 import BreedInput from './Fields/BreedInput';
 import SizeInput from './Fields/SizeInput';
-import AnimalImageInput from './Fields/AnimalImageInput';
 import AnimalGenderInput from './Fields/AnimalGenderInput';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import { Redirect } from 'react-router-dom';
+import AnimalImagePreview from './AnimalImagePreview';
+import Loader from '../Loader';
 
 export enum EAnimalStatus {
     LOST = "LOST",
@@ -45,8 +46,8 @@ export interface IAnimalFormValues {
     images?: File;
 }
 
-const initialValues: IAnimalFormValues = {
-    status: EAnimalStatus.FOUND,
+const defaultInitialValues: IAnimalFormValues = {
+    status: EAnimalStatus.LOST,
     species: "",
     breed: "",
     size: EAnimalSize.EMPTY,
@@ -60,7 +61,11 @@ const initialValues: IAnimalFormValues = {
     images: undefined,
 }
 
-function UploadAnimalFormContainer() {
+interface IProps {
+    initialValues: Partial<IAnimalFormValues>;
+}
+
+function UploadAnimalFormContainer({initialValues}: IProps) {
     const [createdAnimalId, setCreatedAnimalId] = React.useState(-1);
     async function onSubmit(values: IAnimalFormValues, { setSubmitting }: FormikHelpers<IAnimalFormValues>) {
         try {
@@ -89,7 +94,7 @@ function UploadAnimalFormContainer() {
     return (
         <>
         <Formik
-            initialValues={initialValues}
+            initialValues={{...defaultInitialValues, ...initialValues}}
             onSubmit={onSubmit}
             validate={validate}
         >
@@ -110,7 +115,7 @@ function UploadAnimalForm(/* {handleChange, handleBlur, values}: FormikProps<IAn
             <AnimalStatusInput className={classes.statusInput} />
             <SpeciesInput />
             <BreedInput species={values.species} />
-            <AnimalImageInput className={classes.animalImageInput} />
+            <AnimalImagePreview className={classes.animalImageInput} />
             <SizeInput />
             <Field
                 component={TextField}
@@ -155,11 +160,7 @@ function UploadAnimalForm(/* {handleChange, handleBlur, values}: FormikProps<IAn
             >
                 UPLOAD
             </Button>
-            {isSubmitting && (
-                <div className={classes.backdrop}>
-                    <CircularProgress />
-                </div>
-            )}
+            {isSubmitting && <Loader />}
         </Form>
     );
 }
@@ -193,19 +194,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             gridRow: "span 5",
         }
-    },
-    backdrop: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "rgba(255, 255, 255, 0.5)",
-        zIndex: 1
     }
-
 }))
 export default UploadAnimalFormContainer;

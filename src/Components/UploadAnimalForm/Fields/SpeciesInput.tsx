@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, CircularProgress } from "@material-ui/core";
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from "@material-ui/core";
 import { useFormikContext } from "formik";
 import { IAnimalFormValues} from "../UploadAnimalForm";
 import $WhereIsMyPetApiClient from "../../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient";

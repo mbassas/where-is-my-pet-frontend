@@ -1,10 +1,10 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import { TextField, Button, withStyles, WithStyles, createStyles, Snackbar, InputAdornment, IconButton, TextFieldProps, CircularProgress } from '@material-ui/core';
-import { Alert } from "@material-ui/lab"
-import SignUpPagesLayout from '../Layouts/SignUpPagesLayout';
+import { TextField, Button, withStyles, WithStyles, createStyles, InputAdornment, IconButton, TextFieldProps } from '@material-ui/core';
+import { Alert } from "@material-ui/lab";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Loader from '../Loader';
 
 interface IState {
     values: {
@@ -84,11 +84,7 @@ class SignUp extends Component<IProps, IState> {
                         SIGN UP
                     </Button>
                 </form>
-                {this.state.isSubmitting && (
-                    <div className={classes.backdrop}>
-                        <CircularProgress />
-                    </div>
-                )}
+                {this.state.isSubmitting && <Loader />}
             </>
         )
     }
@@ -124,20 +120,7 @@ const styles = createStyles({
     },
     input: {
         width: "100%",
-    },
-    backdrop: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "rgba(255, 255, 255, 0.5)",
-        zIndex: 1
     }
-
 })
 
 export default withStyles(styles)(SignUp);

@@ -9,6 +9,7 @@ import ViewAnimals from './Pages/ViewAnimals';
 import MainLayout from './Components/Layouts/MainLayout/MainLayout';
 import PrivatePage from './Components/Layouts/PrivatePage';
 import AuthenticationProvider from './Components/Authentication';
+import Landing from './Pages/Landing';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -26,8 +27,11 @@ ReactDOM.render(
             <Route path="/view-animal/:id">
               <ViewAnimal />
             </Route>
-            <Route path="/">
+            <Route path="/search">
               <ViewAnimals />
+            </Route>
+            <Route path="/">
+              <Landing />
             </Route>
             <Redirect to="/" />
           </Switch>

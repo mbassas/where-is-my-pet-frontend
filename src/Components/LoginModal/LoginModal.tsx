@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Backdrop, createStyles, makeStyles, Theme, Fade, Tabs, Tab } from "@material-ui/core";
+import { createStyles, makeStyles, Theme, Tabs, Tab, Dialog, DialogContent } from "@material-ui/core";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 
@@ -13,48 +13,39 @@ function LoginModal(props: IProps) {
     const [currentTab, setCurrentTab] = React.useState(0);
 
     return (
-        <Modal
+        <Dialog
             open={props.isOpen}
             onClose={props.onClose}
-            closeAfterTransition
-            className={classes.modal}
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-                timeout: 500,
-            }}
+            scroll="body"
+            fullWidth
         >
-            <Fade in={props.isOpen}>
-                <div className={classes.paper}>
+            <DialogContent>
+                <div>
                     <Tabs value={currentTab} variant="fullWidth" indicatorColor="primary">
-                        <Tab label="Sign In" onClick={() => setCurrentTab(0)}></Tab> />
-                        <Tab label="Sign Up" onClick={() => setCurrentTab(1)}/>
+                        <Tab label="Sign In" onClick={() => setCurrentTab(0)} />
+                        <Tab label="Sign Up" onClick={() => setCurrentTab(1)} />
                     </Tabs>
                     <div className={classes.paperContent}>
                         {currentTab === 0 && (
-                            <SignIn 
+                            <SignIn
                                 onSuccess={props.onClose}
                             />
                         )}
                         {currentTab === 1 && (
-                            <SignUp 
+                            <SignUp
                                 onSuccess={props.onClose}
                             />
                         )}
                     </div>
                 </div>
-            </Fade>
-        </Modal>
+            </DialogContent>
+        </Dialog>
     )
 
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        modal: {
-            display: 'flex',
-            alignItems: 'start',
-            justifyContent: 'center',
-        },
         paper: {
             backgroundColor: theme.palette.background.paper,
             padding: theme.spacing(2, 4, 3),

@@ -18,13 +18,17 @@ export interface IAnimal {
     lat: number;
     lng: number;
     image_name: string;
-
+    distance?: number;
 }
 
 export interface IGetAnimalsParams {
         start?: number;
         count?: number;
-
+        species?: string;
+        breed?: string;
+        status?: string;
+        lat?: number;
+        lng?: number;
 }
 
 class AnimalsController extends BaseController {
@@ -66,7 +70,7 @@ class AnimalsController extends BaseController {
         return this.makeRequest <IAnimal[]>({
             method: "GET",
             url: `/animals`,
-            params,
+            queryParams: params,
         });
     }
 

@@ -1,9 +1,14 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Theme, createStyles } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, makeStyles, Theme, createStyles } from '@material-ui/core';
 import MenuIcon from "@material-ui/icons/Menu";
 import UserInfoButton from './UserInfoButton';
+import { Link } from 'react-router-dom';
 
-function Header() {
+interface IProps {
+    openSidebar: () => void;
+}
+
+function Header({openSidebar}: IProps) {
 
     const classes = useStyles();
 
@@ -11,10 +16,10 @@ function Header() {
         <div className={classes.root}>
             <AppBar position="fixed">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openSidebar}>
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography variant="h6" className={classes.title} component={Link} to ="/">
                         Where is my pet
                     </Typography>
                     <UserInfoButton />
@@ -34,6 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         title: {
             flexGrow: 1,
+            textDecoration: "none",
+            color: theme.palette.secondary.contrastText
         },
     }),
 );

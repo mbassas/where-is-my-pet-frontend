@@ -2,12 +2,14 @@ import UsersController from './Controllers/UserController';
 import AnimalsController from './Controllers/AnimalController';
 import SpeciesController from './Controllers/SpeciesController';
 import BreedsController from './Controllers/BreedController';
+import ImageRecognitionController from './Controllers/ImageRecognitionController';
 
 class WhereIsMyPetApiClient {
     public Users = new UsersController();
     public Animals = new AnimalsController();
     public Species = new SpeciesController();
     public Breeds = new BreedsController();
+    public ImageRecognition = new ImageRecognitionController();
 
     private token = "";
 
