@@ -7,33 +7,63 @@ export interface IAnimalFilters {
     species?: string;
     breed?: string;
     status?: EAnimalStatus;
+    lat?: number;
+    lng?: number;
+    location?: string;
 }
 
 function useAnimals(filters?: IAnimalFilters) {
     const [animals, setAnimals] = React.useState<IAnimal[]>();
     const [isLoading, setIsLoading] = React.useState(false);
+    const [hasMore, setHasMore] = React.useState(false);
 
     const breed = filters?.breed;
     const species = filters?.species;
+    const status = filters?.status;
+    const lat = filters?.lat;
+    const lng = filters?.lng;
+
+    async function getMoreAnimals(emptyList = false) {
+        setIsLoading(true);
+        
+        let currentAnimals = animals || [];
+        if (emptyList) {
+            currentAnimals = [];
+        }
+
+        try {
+            const {data} = await $WhereIsMyPetApiClient.Animals.GetAnimals({
+                breed: breed,
+                species: species,
+                status: status,
+                lat: lat,
+                lng: lng,
+                start: currentAnimals.length,
+                count: Math.min(),
+            });
+    
+            setAnimals(currentAnimals.concat(data));
+            setHasMore(data.length === 10);
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     React.useEffect(() => {
         if (!filters) {
             return;
         }
-        setIsLoading(true);
 
-        $WhereIsMyPetApiClient.Animals.GetAnimals({
-            breed: breed,
-            species: species,
-        }).then(({ data }) => {
-            setAnimals(data);
-        }).finally(() => {
-            setIsLoading(false);
-        });
-    }, [breed, species]);
+        getMoreAnimals(true);
+    }, [breed, species, status, lat, lng]);
 
     return {
         animals,
-        isLoading
+        isLoading,
+        getMoreAnimals,
+        hasMore
     };
 }
 

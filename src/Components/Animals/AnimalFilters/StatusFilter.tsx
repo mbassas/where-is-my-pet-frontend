@@ -20,7 +20,7 @@ function StatusFilter({value, onChange }: IProps) {
                 }}
                 label="Status"
             >
-                <option aria-label="Lost or Found" value={undefined}>Lost or Found</option>
+                <option aria-label="Lost or Found" value={""}></option>
                 <option aria-label="Lost" value={EAnimalStatus.LOST}>Lost</option>
                 <option aria-label="Found" value={EAnimalStatus.FOUND}>Found</option>
 

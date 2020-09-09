@@ -1,26 +1,45 @@
 import * as React from "react";
 import AnimalCard from "../AnimalCard";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Button } from "@material-ui/core";
 import useAnimals, { IAnimalFilters } from "../../Hooks/useAnimals";
+import Loader from "../Loader";
+import NotFound from "../../Pages/NotFound";
 
 interface IProps {
     filters?: IAnimalFilters;
+    limit?: number;
 }
 
-function AnimalList({ filters = {} }: IProps) {
+function AnimalList({ filters, limit = 0 }: IProps) {
     const classes = useStyles();
-    const {animals, isLoading} = useAnimals(filters); 
+    const { animals, isLoading, getMoreAnimals, hasMore } = useAnimals(filters);
 
-    if (!animals) {
-        return null;
+    let items = animals;
+
+    if (limit) {
+        items = items?.slice(0, limit);
     }
 
+    const limitReached = limit && animals && animals.length >= limit;
     return (
-        <div className={classes.list}>
+        <>
+            <div className={classes.list}>
+                {isLoading && <Loader position="fixed"/>}
+                { !isLoading && !animals?.length && <NotFound />}
+                {
+                    items?.map(((animal) => <AnimalCard key={`animal_${animal.id}`} {...animal} />))
+                }
+            </div>
             {
-                animals.map(((animal) => <AnimalCard key={`animal_${animal.id}`} {...animal} />))
+                (hasMore && !limitReached) && (
+                    <div className={classes.viewMoreButton}>
+                        <Button variant="outlined" onClick={() => getMoreAnimals()}>
+                            View more
+                        </Button>
+                    </div>
+                )
             }
-        </div>
+        </>
     )
 }
 
@@ -36,6 +55,11 @@ const useStyles = makeStyles(theme => ({
             gridTemplateColumns: "1fr 1fr 1fr",
         }
     },
+    viewMoreButton: {
+        display: "flex",
+        justifyContent: "center",
+        margin: "25px 0 0 0"
+    }
 }))
 
 export default AnimalList;

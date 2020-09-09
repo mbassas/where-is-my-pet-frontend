@@ -1,6 +1,7 @@
 import React from "react";
-import { Container, Grid, Paper, makeStyles, Backdrop, CircularProgress } from "@material-ui/core";
+import { Container, Grid, Paper, makeStyles } from "@material-ui/core";
 import SignUpMenu from "../SignupMenu";
+import Loader from "../Loader";
 
 interface IProps {
     info?: string;
@@ -17,11 +18,7 @@ function SignUpPagesLayout({ children, isLoading, showTabs = true }: IProps) {
             <Grid container justify="center">
                 <Grid component={Paper} xs={12} sm={10} md={6} item className={classes.wrapper}>
                     {showTabs && <SignUpMenu />}
-                    {isLoading && (
-                        <div className={classes.backdrop}>
-                            <CircularProgress />
-                        </div>
-                    )}
+                    {isLoading && <Loader />}
                     {children}
                 </Grid>
             </Grid>
@@ -46,18 +43,6 @@ const useStyles = makeStyles({
         padding: "1em 1.2rem",
         position: "relative",
         marginBottom: "50px"
-    },
-    backdrop: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "rgba(255, 255, 255, 0.5)",
-        zIndex: 1
     }
 })
 

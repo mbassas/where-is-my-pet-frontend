@@ -12,11 +12,11 @@ export async function getLatLon(search: string) {
 }
 
 export function getLocation() {
-    return new Promise<Position>((resolve, reject) => {
+    return new Promise<Position | null>((resolve, reject) => {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(resolve);
+            navigator.geolocation.getCurrentPosition(resolve, () => resolve(null));
         } else {
-            reject();
+            resolve(null);
         }
     })
 }

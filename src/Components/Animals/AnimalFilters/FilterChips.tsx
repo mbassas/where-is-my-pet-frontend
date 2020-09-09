@@ -16,6 +16,7 @@ function FilterChips ({filters, setFilters}: IProps) {
             {filters.status && <Chip label={filters.status.toLocaleLowerCase()} onDelete={() => setFilters({...filters, status: undefined})} />}
             {filters.species && <Chip label={filters.species.toLocaleLowerCase()} onDelete={() => setFilters({...filters, species: undefined, breed: undefined})} />}
             {filters.breed && <Chip label={filters.breed} onDelete={() => setFilters({...filters, breed: undefined})} /> }
+            {filters.location && <Chip label={filters.location} onDelete={() => setFilters({...filters, lat: undefined, lng: undefined, location: undefined})} /> }
         </div>
     );
 
@@ -24,8 +25,9 @@ function FilterChips ({filters, setFilters}: IProps) {
 const useStyles = makeStyles((theme) => ({
     wrapper: {
         display: "flex",
-        minWidth: "100%",
+        width: "100%",
         padding: "10px 0",
+        overflowX: "auto",
         textTransform: "capitalize",
         "& > div:not(:first-child)": {
             marginLeft: "10px",

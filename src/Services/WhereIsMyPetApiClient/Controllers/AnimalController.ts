@@ -18,7 +18,7 @@ export interface IAnimal {
     lat: number;
     lng: number;
     image_name: string;
-
+    distance?: number;
 }
 
 export interface IGetAnimalsParams {
@@ -26,6 +26,7 @@ export interface IGetAnimalsParams {
         count?: number;
         species?: string;
         breed?: string;
+        status?: string;
         lat?: number;
         lng?: number;
 }

@@ -8,7 +8,7 @@ const classes = useStyles();
     return (
         <div className = {classes.container} >
             <Link
-                to={"/search"}
+                to={"/search?status=FOUND"}
                 className={`${classes.button} ${classes.lost}`}
             >
                 I lost an animal

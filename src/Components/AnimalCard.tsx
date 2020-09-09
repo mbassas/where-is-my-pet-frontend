@@ -32,7 +32,7 @@ function AnimalCard(props: IProps) {
                     <div className={classes.chips}>
                         <Chip icon={<Pets />} label={props.status} color={props.status == "LOST" ? "secondary" : "primary"} />
                         <Chip icon={<CalendarToday />} label={moment(props.publication_date).local().fromNow()} />
-                        <Chip icon={<LocationOn />} label={props.location} />
+                        <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
 
                     </div>
                 </CardMedia>
@@ -51,7 +51,9 @@ function AnimalCard(props: IProps) {
                                 window.open(`http://maps.google.com/maps?q=loc:${props.lat},${props.lng}`);
                             }}
                         />
-                        <div>{props.location}</div>
+                        <div>
+                            {props.location}
+                        </div>
                     </div>
 
                     <div>

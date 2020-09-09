@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, FormikHelpers, Form, useFormikContext, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Button, makeStyles, CircularProgress } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import LocationInput from '../Inputs/LocationInput';
 import SpeciesInput from './Fields/SpeciesInput';
 import AnimalStatusInput from './Fields/StatusInput';
@@ -11,6 +11,7 @@ import AnimalGenderInput from './Fields/AnimalGenderInput';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import { Redirect } from 'react-router-dom';
 import AnimalImagePreview from './AnimalImagePreview';
+import Loader from '../Loader';
 
 export enum EAnimalStatus {
     LOST = "LOST",
@@ -159,11 +160,7 @@ function UploadAnimalForm(/* {handleChange, handleBlur, values}: FormikProps<IAn
             >
                 UPLOAD
             </Button>
-            {isSubmitting && (
-                <div className={classes.backdrop}>
-                    <CircularProgress />
-                </div>
-            )}
+            {isSubmitting && <Loader />}
         </Form>
     );
 }
@@ -197,19 +194,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up("sm")]: {
             gridRow: "span 5",
         }
-    },
-    backdrop: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "rgba(255, 255, 255, 0.5)",
-        zIndex: 1
     }
-
 }))
 export default UploadAnimalFormContainer;
