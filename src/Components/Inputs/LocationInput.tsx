@@ -27,10 +27,10 @@ function LocationInput({ onChange = () => { }, inputProps, value, autolocate = t
         }
         console.log(location);
 
-        const newValue = `${location.address.postcode} ${location.address.town}`;
+        const newValue = `${location.address.postcode || ""} ${location.address.town || ""}`.trim();
         setDisplayValue(newValue);
 
-        onChange(parseFloat(location.lat), parseFloat(location.lon), newValue);
+        onChange(lat, lng, newValue);
     }
 
     async function locateUsingValue() {

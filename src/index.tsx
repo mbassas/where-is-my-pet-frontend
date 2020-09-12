@@ -7,7 +7,6 @@ import UploadAnimal from './Pages/UploadAnimal';
 import ViewAnimal from './Pages/ViewAnimal';
 import ViewAnimals from './Pages/ViewAnimals';
 import MainLayout from './Components/Layouts/MainLayout/MainLayout';
-import PrivatePage from './Components/Layouts/PrivatePage';
 import AuthenticationProvider from './Components/Authentication';
 import Landing from './Pages/Landing';
 
@@ -21,9 +20,9 @@ ReactDOM.render(
             <Route path="/recover-password">
               <RecoverPassword />
             </Route>
-            <PrivatePage path="/upload-animal">
+            <Route path="/upload-animal">
               <UploadAnimal />
-            </PrivatePage>
+            </Route>
             <Route path="/view-animal/:id">
               <ViewAnimal />
             </Route>

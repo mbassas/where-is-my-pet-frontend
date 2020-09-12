@@ -14,13 +14,13 @@ function StatusFilter({value, onChange }: IProps) {
             <InputLabel htmlFor="outlined-age-native-simple">Status</InputLabel>
             <Select
                 native
-                value={value}
+                value={value || ""}
                 onChange={(e) => {
                     onChange(e.currentTarget.value as EAnimalStatus);
                 }}
                 label="Status"
             >
-                <option aria-label="Lost or Found" value={""}></option>
+                <option value={""}></option>
                 <option aria-label="Lost" value={EAnimalStatus.LOST}>Lost</option>
                 <option aria-label="Found" value={EAnimalStatus.FOUND}>Found</option>
 

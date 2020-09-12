@@ -36,7 +36,7 @@ function SpeciesFilter({onChange, value}: IProps){
         >
             <option aria-label="None" value="" />
             {species.map((species) => (
-                <option value={species}>{species}</option>
+                <option key={species} value={species}>{species}</option>
             ))}
         </Select>
     </FormControl>
