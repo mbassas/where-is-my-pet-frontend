@@ -1,19 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ba2a05f40a1362682d97a5bc77c9ec34",
+    "revision": "ca70f81b8cb8ec6970e1dd26f2a71249",
     "url": "/where-is-my-pet-frontend/index.html"
   },
   {
-    "revision": "a7de22b1972cebf84c4f",
-    "url": "/where-is-my-pet-frontend/static/js/2.0a5b603e.chunk.js"
+    "revision": "abcfe4c1f9630c74c3fb",
+    "url": "/where-is-my-pet-frontend/static/css/2.bcddf60d.chunk.css"
   },
   {
-    "revision": "32fd9856557cf85053f70411a5ee6e8d",
-    "url": "/where-is-my-pet-frontend/static/js/2.0a5b603e.chunk.js.LICENSE.txt"
+    "revision": "abcfe4c1f9630c74c3fb",
+    "url": "/where-is-my-pet-frontend/static/js/2.516410be.chunk.js"
   },
   {
-    "revision": "904ec3d67eb4675c863b",
-    "url": "/where-is-my-pet-frontend/static/js/main.11946594.chunk.js"
+    "revision": "a9c38c5ff38f83dbdfe037bc13a953c3",
+    "url": "/where-is-my-pet-frontend/static/js/2.516410be.chunk.js.LICENSE.txt"
+  },
+  {
+    "revision": "0e09490e033cf5c53366",
+    "url": "/where-is-my-pet-frontend/static/js/main.008c126e.chunk.js"
   },
   {
     "revision": "556fd8e8eb9f49384391",
