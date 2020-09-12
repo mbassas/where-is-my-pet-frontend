@@ -7,12 +7,15 @@ import AnimalList from '../Components/Animals/AnimalList';
 import useAnimals from '../Hooks/useAnimals';
 import Loader from '../Components/Loader';
 import { getLocation } from '../Services/Geolocation/GeolocationService';
+import useAuthentication from '../Hooks/useAuthentication';
+import LoginModal from '../Components/LoginModal/LoginModal';
 
 function UploadAnimal() {
     const [formInitialValues, setFormInitialValues] = React.useState<Partial<IAnimalFormValues>>();
     const [isSubmitting, setIsSubmitting]= React.useState(false);
     const [showUploadForm, setShowUploadForm] = React.useState(false);
     const {animals, isLoading} = useAnimals(formInitialValues);
+    const {userInfo, loadUserData} = useAuthentication();
     const classes = useStyles();
 
     async function onChange(image: File) {
@@ -49,7 +52,19 @@ function UploadAnimal() {
 
     if (showUploadForm || (animals?.length === 0 && !isLoading)) {
         return (
-            <UploadAnimalFormContainer initialValues={formInitialValues} />
+            <>  
+                <LoginModal 
+                    isOpen={!userInfo}
+                    onClose={() => {
+                        if($WhereIsMyPetApiClient.getToken()) {
+                            loadUserData();
+                        } else {
+                            setFormInitialValues(undefined);
+                        }
+                    }} 
+                />
+                <UploadAnimalFormContainer initialValues={formInitialValues} />
+            </>
         )
     }
 

@@ -41,7 +41,7 @@ function BreedFilter({species, onChange, value}: IProps){
         >
             <option aria-label="None" value="" />
             {breeds.map((breed) => (
-                <option value={breed}>{breed}</option>
+                <option value={breed} key={breed}>{breed}</option>
             ))}
         </Select>
     </FormControl>

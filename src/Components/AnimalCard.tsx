@@ -10,6 +10,7 @@ import Pets from '@material-ui/icons/Pets';
 import { ReactComponent as CatIcon } from './Icons/cat.svg';
 import { ReactComponent as DogIcon } from './Icons/dog.svg';
 import { ReactComponent as PawsIcon } from './Icons/paws.svg';
+import ImagePreviewModal from './ImagePreviewModal';
 
 interface IProps extends IAnimal {
     showDetails?: boolean,
@@ -17,6 +18,7 @@ interface IProps extends IAnimal {
 
 function AnimalCard(props: IProps) {
     const classes = useStyles();
+    const [showImagePreviewModal, setShowImagePreviewModal ] = React.useState(false);
 
     return (
         <Card className={classes.root}>
@@ -28,6 +30,7 @@ function AnimalCard(props: IProps) {
                     className={classes.media}
                     image={$WhereIsMyPetApiClient.Animals.Image(props.id, props.image_name)}
                     component={Link} to={`/view-animal/${props.id}`}
+                    onClick={() => setShowImagePreviewModal(true)}
                 >
                     <div className={classes.chips}>
                         <Chip icon={<Pets />} label={props.status} color={props.status == "LOST" ? "secondary" : "primary"} />
@@ -38,6 +41,12 @@ function AnimalCard(props: IProps) {
                 </CardMedia>
             </CardActionArea>
             {props.showDetails && (
+            <>
+            { showImagePreviewModal &&
+                <ImagePreviewModal onClose={() => setShowImagePreviewModal(false)}>
+                    <img src={$WhereIsMyPetApiClient.Animals.Image(props.id, props.image_name)} />
+                </ImagePreviewModal>
+            }
                 <CardContent className={classes.content}>
                     <div>
                         <b className={classes.label}>Publication date:</b>
@@ -101,6 +110,7 @@ function AnimalCard(props: IProps) {
                     }
 
                 </CardContent>
+                </>
             )}
         </Card>
     );
