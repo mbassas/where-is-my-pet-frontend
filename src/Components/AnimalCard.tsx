@@ -11,6 +11,7 @@ import { ReactComponent as CatIcon } from './Icons/cat.svg';
 import { ReactComponent as DogIcon } from './Icons/dog.svg';
 import { ReactComponent as PawsIcon } from './Icons/paws.svg';
 import ImagePreviewModal from './ImagePreviewModal';
+import AnimalLocationMap from './AnimalLocationMap';
 
 interface IProps extends IAnimal {
     showDetails?: boolean,
@@ -54,11 +55,10 @@ function AnimalCard(props: IProps) {
                     </div>
 
                     <div className={classes.location}>
-                        <img
-                            src={$WhereIsMyPetApiClient.Animals.LocationImage(props.id)} className={classes.locationImage}
-                            onClick={() => {
-                                window.open(`http://maps.google.com/maps?q=loc:${props.lat},${props.lng}`);
-                            }}
+                        <AnimalLocationMap
+                            lat={props.lat}
+                            lng={props.lng}
+                            className={classes.map}
                         />
                         <div>
                             {props.location}
@@ -175,6 +175,10 @@ const useStyles = makeStyles(theme => ({
         height: "100%",
         objectFit: "cover",
         cursor: "pointer"
+    },
+    map: {
+        height: "100%",
+        minHeight: "250px",
     }
 }));
 
