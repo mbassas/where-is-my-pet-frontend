@@ -15,7 +15,8 @@ import AnimalLocationMap from './AnimalLocationMap';
 import useAuthentication from '../Hooks/useAuthentication';
 
 interface IProps extends IAnimal {
-    showDetails?: boolean,
+    showDetails?: boolean;
+    loadAnimal?: () => void;
 };
 
 function AnimalCard(props: IProps) {
@@ -39,7 +40,7 @@ function AnimalCard(props: IProps) {
                         <Chip icon={<Pets />} label={props.status} color={props.status == "LOST" ? "secondary" : "primary"} />
                         <Chip icon={<CalendarToday />} label={moment(props.publication_date).local().fromNow()} />
                         <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
-
+                        {props.recovered && userInfo?.id && userInfo.id === props.user_id && <Chip label={"RECOVERED"} />}
                     </div>
                 </CardMedia>
             </CardActionArea>
@@ -110,7 +111,7 @@ function AnimalCard(props: IProps) {
                             <b className={classes.label}>Name:</b> {props.name}
                         </div>)
                     }
-                    {userInfo?.id && userInfo.id === props.user_id && (
+                    {!props.recovered && userInfo?.id && userInfo.id === props.user_id && (
                         <Button
                             type="submit"
                             variant="contained"
@@ -120,13 +121,15 @@ function AnimalCard(props: IProps) {
                                 () => {
                                     loadUserData();
                                     $WhereIsMyPetApiClient.Animals.UpdateAnimal(props.id);
+                                    if(props.loadAnimal) {
+                                        props.loadAnimal();
+                                    } 
                                 }
                             }
                         >
                             Mark as recovered
                         </Button>
                         )}
-
                 </CardContent>
                 </>
             )}
