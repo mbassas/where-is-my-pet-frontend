@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { IAnimal } from '../Services/WhereIsMyPetApiClient/Controllers/AnimalController';
-import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles, Button } from '@material-ui/core';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import moment from 'moment';
 import CalendarToday from '@material-ui/icons/CalendarTodayOutlined';
@@ -12,6 +12,7 @@ import { ReactComponent as DogIcon } from './Icons/dog.svg';
 import { ReactComponent as PawsIcon } from './Icons/paws.svg';
 import ImagePreviewModal from './ImagePreviewModal';
 import AnimalLocationMap from './AnimalLocationMap';
+import useAuthentication from '../Hooks/useAuthentication';
 
 interface IProps extends IAnimal {
     showDetails?: boolean,
@@ -20,6 +21,7 @@ interface IProps extends IAnimal {
 function AnimalCard(props: IProps) {
     const classes = useStyles();
     const [showImagePreviewModal, setShowImagePreviewModal ] = React.useState(false);
+    const {loadUserData, userInfo} = useAuthentication();
 
     return (
         <Card className={classes.root}>
@@ -108,6 +110,22 @@ function AnimalCard(props: IProps) {
                             <b className={classes.label}>Name:</b> {props.name}
                         </div>)
                     }
+                    {userInfo?.id && userInfo.id === props.user_id && (
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.recovered}
+                            onClick={
+                                () => {
+                                    loadUserData();
+                                    $WhereIsMyPetApiClient.Animals.UpdateAnimal(props.id);
+                                }
+                            }
+                        >
+                            Mark as recovered
+                        </Button>
+                        )}
 
                 </CardContent>
                 </>
@@ -179,6 +197,15 @@ const useStyles = makeStyles(theme => ({
     map: {
         height: "100%",
         minHeight: "250px",
+    },
+    recovered: {
+        [theme.breakpoints.up("sm")]: {
+            gridColumn: "span 2",
+        },
+        gridColumn: "1/-1",
+        [theme.breakpoints.up("md")]: {
+        width: "fit-content",
+        }
     }
 }));
 

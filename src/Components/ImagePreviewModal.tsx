@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
         zIndex: 2000,
         background: "rgba(255, 255, 255, 0.7)",
         display: "flex",
-        alignItems: "center",        
+        alignItems: "center",   
+        justifyContent: "center",     
         "& > div": {
             overflow: "visible"
         },

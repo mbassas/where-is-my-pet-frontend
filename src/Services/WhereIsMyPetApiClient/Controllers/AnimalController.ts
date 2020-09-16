@@ -19,6 +19,7 @@ export interface IAnimal {
     lng: number;
     image_name: string;
     distance?: number;
+    recovered?: boolean;
 }
 
 export interface IGetAnimalsParams {
@@ -73,6 +74,16 @@ class AnimalsController extends BaseController {
             queryParams: params,
         });
     }
+
+    public UpdateAnimal (id: number) {
+        return this.makeRequest <Partial<IAnimal>>({
+            method: "PATCH",
+            url: `/animals/${id}`,
+            params: { 
+                recovered: true
+            },
+        });
+    };
 
 }
 
