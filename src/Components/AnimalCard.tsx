@@ -118,9 +118,9 @@ function AnimalCard(props: IProps) {
                             color="primary"
                             className={classes.recovered}
                             onClick={
-                                () => {
+                                async () => {
                                     loadUserData();
-                                    $WhereIsMyPetApiClient.Animals.UpdateAnimal(props.id);
+                                    await $WhereIsMyPetApiClient.Animals.UpdateAnimal(props.id);
                                     if(props.loadAnimal) {
                                         props.loadAnimal();
                                     } 

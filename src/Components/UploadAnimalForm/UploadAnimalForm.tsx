@@ -88,6 +88,12 @@ function UploadAnimalFormContainer({initialValues}: IProps) {
             // @ts-ignore
             errors.species = "You must enter the species for the animal";
         }
+        if(!values.lat || !values.lng) {
+            // @ts-ignore
+            errors.lat = "Location is required";
+            // @ts-ignore
+            errors.lng = "Location is required";
+        }
         return errors;
     }
 

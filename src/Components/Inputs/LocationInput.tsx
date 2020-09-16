@@ -50,6 +50,18 @@ function LocationInput({ onChange = () => { }, inputProps, value, autolocate = t
         onChange(parseFloat(lat), parseFloat(lon), newValue);
     }
 
+    React.useEffect(() => {
+        if (!displayValue) {
+            return;
+        }
+
+        const timer = setTimeout(locateUsingValue, 1000);
+
+        return () => {
+            clearTimeout(timer);
+        }
+    }, [displayValue])
+
     React.useEffect(() => { 
         if (autolocate) {
             locateUser(); 
@@ -88,7 +100,7 @@ function LocationInput({ onChange = () => { }, inputProps, value, autolocate = t
             {...inputProps}
             value={displayValue}
             onChange={(e) => setDisplayValue(e.currentTarget.value)}
-            onBlur={locateUsingValue}
+            // onBlur={locateUsingValue}
             variant="outlined"
         />
     )
