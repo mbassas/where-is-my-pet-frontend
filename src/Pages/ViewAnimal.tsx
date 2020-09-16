@@ -9,13 +9,17 @@ function ViewAnimal() {
     const {id} = useParams();
     
     const [animal, setAnimal] = React.useState<IAnimal>();
-    React.useEffect(() => {
+    
+    function loadAnimal() {
         if (!id) {
             return;
         }
-
         $WhereIsMyPetApiClient.Animals.GetAnimalDetails(parseInt(id))
-            .then(({ data }) => setAnimal(data));
+                .then(({ data }) => setAnimal(data));
+    }
+    
+    React.useEffect(() => {
+        loadAnimal();
     }, [id]); 
     
     if(!animal) {
@@ -23,7 +27,7 @@ function ViewAnimal() {
     }
   
     return (
-        <AnimalCard showDetails {...animal} />
+        <AnimalCard showDetails {...animal} loadAnimal={loadAnimal}/>
     )
 }
 
