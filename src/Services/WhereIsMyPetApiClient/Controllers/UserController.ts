@@ -15,6 +15,8 @@ export interface IUser {
     username: string;
     name: string;
     surname: string;
+    roles: string[];
+    status: string;
 }
 
 class UsersController extends BaseController {
@@ -70,6 +72,25 @@ class UsersController extends BaseController {
             url: "/users"
         });
 
+    }
+
+    public async GetUsersByStatus(status: string[]) {
+        const url = "/users/by-status";
+
+        return this.makeRequest<IUser[]>({
+            method: "GET",
+            url,
+            queryParams: {status}    
+        })
+    }
+
+    public async UpdateUser(userId: number, user: Partial<IUser>) {
+
+        return this.makeRequest<void>({
+            method: "PATCH",
+            url: `/users/${userId}`,
+            params: user
+        })
     }
 
 }

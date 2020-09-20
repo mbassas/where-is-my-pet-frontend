@@ -1,8 +1,9 @@
 import React from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, makeStyles } from "@material-ui/core";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, makeStyles, ListSubheader } from "@material-ui/core";
 import Settings from "@material-ui/icons/SettingsOutlined";
 import Help from "@material-ui/icons/HelpOutlined";
 import Home from "@material-ui/icons/HomeOutlined";
+import SupervisorAccount from "@material-ui/icons/SupervisorAccountOutlined";
 import Email from "@material-ui/icons/EmailOutlined";
 import AccountCircle from "@material-ui/icons/AccountCircleOutlined";
 import Search from "@material-ui/icons/SearchOutlined";
@@ -53,6 +54,14 @@ function Sidebar({close, isOpen}: IProps) {
                         <SidebarLink to="/upload-animal" label="Upload Animal" Icon={<CloudUpload />} />
                         <SidebarLink to="/search" label="Find Animals" Icon={<Search />} />
                     </List>
+                    {userInfo?.roles.includes("Admin") && (
+                        <>
+                            <Divider />
+                            <List subheader={<ListSubheader>Admin Panel</ListSubheader>}>
+                                <SidebarLink to="/admin/users" label="Review Users" Icon={<SupervisorAccount />} />
+                            </List>
+                        </>
+                    )}
                     <Divider />
                     <List>
                         <SidebarLink to="" label="Settings" Icon={<Settings />} disabled/>
