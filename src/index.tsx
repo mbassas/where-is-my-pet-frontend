@@ -9,6 +9,7 @@ import ViewAnimals from './Pages/ViewAnimals';
 import MainLayout from './Components/Layouts/MainLayout/MainLayout';
 import AuthenticationProvider from './Components/Authentication';
 import Landing from './Pages/Landing';
+import AdminPages from './Pages/Admin';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -28,6 +29,9 @@ ReactDOM.render(
             </Route>
             <Route path="/search">
               <ViewAnimals />
+            </Route>
+            <Route path="/admin">
+              <AdminPages />
             </Route>
             <Route path="/">
               <Landing />
