@@ -40,7 +40,7 @@ function AnimalCard(props: IProps) {
                         <Chip icon={<Pets />} label={props.status} color={props.status == "LOST" ? "secondary" : "primary"} />
                         <Chip icon={<CalendarToday />} label={moment(props.publication_date).local().fromNow()} />
                         <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
-                        {props.recovered && userInfo?.id && userInfo.id === props.user_id && <Chip label={"RECOVERED"} />}
+                        {props.recovered && <Chip label={"RECOVERED"} />}
                     </div>
                 </CardMedia>
             </CardActionArea>
