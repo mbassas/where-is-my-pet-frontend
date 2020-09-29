@@ -1,126 +1,192 @@
-import React, { Component, FormEvent, ChangeEvent } from 'react';
+import React from 'react';
 import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
-import { TextField, Button, withStyles, WithStyles, createStyles, InputAdornment, IconButton, TextFieldProps } from '@material-ui/core';
-import { Alert } from "@material-ui/lab";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import { Button, makeStyles } from '@material-ui/core';
+import { TextField } from 'formik-material-ui';
+
 import Loader from '../Loader';
+import { Formik, FormikHelpers, Form, useFormikContext, Field, FieldProps } from 'formik';
+import { ISignUpParams } from '../../Services/WhereIsMyPetApiClient/Controllers/UserController';
+import PasswordInput from '../Inputs/PasswordInput';
+import { Alert } from '@material-ui/lab';
 
-interface IState {
-    values: {
-        name: string;
-        surname: string;
-        email: string;
-        phone: string;
-        username: string;
-        password: string;
-    };
-    isSubmitting: boolean;
-    submitError: boolean;
+const defaultInitialValues: ISignUpParams = {
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+    username: "",
+    password: ""
 }
-
-interface IProps extends WithStyles<typeof styles> {
+interface IProps {
     onSuccess: () => void;
 }
-class SignUp extends Component<IProps, IState> {
-    state: IState = {
-        values: {
-            name: "",
-            surname: "",
-            email: "",
-            phone: "",
-            username: "",
-            password: "",
-        },
-        isSubmitting: false,
-        submitError: false
-    }
-    _onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        // cancel automatic browser submit
-        event.preventDefault();
 
-        this.setState({ isSubmitting: true });
+function SignUpFormContainer(props: IProps) {
+    const [submitError, setSubmitError] = React.useState("");
+
+    async function onSubmit(values: ISignUpParams, { setSubmitting }: FormikHelpers<ISignUpParams>) {
+        setSubmitError("");
         try {
-            const response = await $WhereIsMyPetApiClient.Users.SignUp(this.state.values);
+            const response = await $WhereIsMyPetApiClient.Users.SignUp(values);
             $WhereIsMyPetApiClient.setToken(response.data.token);
-            this.props.onSuccess();
+            props.onSuccess();
         } catch (e) {
-            this.setState({ submitError: true })
+            setSubmitError(e.response.data);
         } finally {
-            this.setState({ isSubmitting: false });
+            setSubmitting(false);
         }
-
     }
-    _onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        // @ts-ignore
-        this.setState({
-            values: {
-                ...this.state.values,
-                [event.currentTarget.name]: event.currentTarget.value,
-            }
-        });
+    function validate(values: ISignUpParams) {
+        let errors: Partial<ISignUpParams> = {};
+        if (!values.name) {
+            errors.name = "You must enter a name";
+        }
+        if (!values.surname) {
+            errors.surname = "You must enter a surname";
+        }
+        if (!values.email) {
+            errors.email = "You must enter an email";
+        }
+        if (!values.phone) {
+            errors.phone = "You must enter a phone number";
+        }
+        if (!values.username) {
+            errors.username = "You must enter a username";
+        }
+        if (!values.password) {
+            errors.password = "You must enter a password";
+        }
+        return errors;
     }
-    render() {
-        const { classes } = this.props;
-        return (
-            <>
-                {this.state.submitError && (
-                    <>
-                        <Alert severity="error">Ups - Cannot create account!</Alert>
-                        <br />
-                    </>
-                )}
-                <p>
-                    Sign up to upload an animal!
-                </p>
-                <form onSubmit={this._onSubmit}>
-                    <TextField required margin={"normal"} type="text" name="name" onChange={this._onChange} label="Name" variant="outlined" className={classes.input} />
-                    <TextField required margin={"normal"} type="text" name="surname" onChange={this._onChange} label="Surname" variant="outlined" className={classes.input} />
-                    <TextField required margin={"normal"} type="email" name="email" onChange={this._onChange} label="Email" variant="outlined" className={classes.input} />
-                    <TextField required margin={"normal"} type="tel" name="phone" onChange={this._onChange} label="Mobile phone" variant="outlined" className={classes.input} />
-                    <TextField required margin={"normal"} type="text" name="username" onChange={this._onChange} label="Username" variant="outlined" className={classes.input} />
-                    <PasswordInput required margin={"normal"} name="password" onChange={this._onChange} label="Password" variant="outlined" className={classes.input} />
-                    <Button type="submit" variant="contained" color="primary" disabled={this.state.isSubmitting} fullWidth>
-                        SIGN UP
-                    </Button>
-                </form>
-                {this.state.isSubmitting && <Loader />}
-            </>
-        )
-    }
-}
 
-function PasswordInput(props: TextFieldProps) {
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const showPasswordButton = (
-        <InputAdornment position="end">
-            <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setShowPassword(!showPassword)}
-                onMouseDown={(e) => {e.preventDefault();}}
-            >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-            </IconButton>
-        </InputAdornment>
-    )
-    
     return (
-        <TextField type={showPassword ? "text" : "password"}  InputProps={{endAdornment: showPasswordButton}} {...props} />
-    )
+        <Formik
+            initialValues={defaultInitialValues}
+            onSubmit={onSubmit}
+            validate={validate}
+        >
+            <SignUpForm submitError={submitError}/>
+        </Formik>
+    );
 }
 
-const styles = createStyles({
+
+function SignUpForm({submitError}: {submitError: string}) {
+    const { isSubmitting, isValid,  } = useFormikContext<ISignUpParams>();
+    const classes = useStyles();
+    return (
+        <>
+            {Boolean(submitError) && (
+                <>
+                    <br />
+                    <Alert severity="error">{submitError}</Alert>
+                </>
+            )}
+            <p>
+                Sign up to upload an animal!
+            </p>
+            <Form>
+                <Field
+                    margin="normal"
+                    className={classes.input}
+                    component={TextField}
+                    name="name"
+                    // required
+                    type="text"
+                    label="Name"
+                    variant="outlined"
+                />
+                <Field
+                    margin="normal"
+                    className={classes.input}
+                    component={TextField}
+                    name="surname"
+                    // required
+                    type="text"
+                    label="Surname"
+                    variant="outlined"
+                />
+                <Field
+                    margin="normal"
+                    className={classes.input}
+                    component={TextField}
+                    name="email"
+                    // required
+                    type="email"
+                    label="Email"
+                    variant="outlined"
+                />
+                <Field
+                    margin="normal"
+                    className={classes.input}
+                    component={TextField}
+                    name="phone"
+                    // required
+                    type="tel"
+                    label="Phone"
+                    variant="outlined"
+                />
+                <Field
+                    margin="normal"
+                    className={classes.input}
+                    component={TextField}
+                    name="username"
+                    // required
+                    type="text"
+                    label="Username"
+                    variant="outlined"
+                />
+                <Field name="password">
+                    {({ field, form, meta }: FieldProps) => (
+                        <PasswordInput
+                            {...field}
+                            margin="normal"
+                            className={classes.input}
+                            // required
+                            label="Password"
+                            variant="outlined"
+                            error={Boolean(form.errors["password"]) && Boolean(form.touched["password"])}
+                            helperText={Boolean(form.touched["password"]) ? form.errors["password"] : ""}
+                        />
+                    )}
+                </Field>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    disabled={isSubmitting || !isValid}
+                    fullWidth
+                >
+                    SIGN UP
+                </Button>
+                {isSubmitting && <Loader />}
+            </Form>
+        </>
+    );
+
+}
+
+
+
+const useStyles = makeStyles((theme) => ({
     container: {
         minHeight: "100vh",
         background: "linear-gradient(rgba(167, 102, 10, 1), rgba(255, 136, 0, 1))",
+    },
+    button: {
+        marginTop: theme.spacing(2),
     },
     wrapper: {
         padding: "1em 1.2rem",
     },
     input: {
         width: "100%",
+        marginBottom: "16px",
+        "& > p": {
+            marginBottom: "-22px"
+        }
     }
-})
+}))
 
-export default withStyles(styles)(SignUp);
+export default SignUpFormContainer;

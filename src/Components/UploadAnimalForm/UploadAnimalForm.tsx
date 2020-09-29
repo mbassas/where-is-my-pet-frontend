@@ -113,7 +113,7 @@ function UploadAnimalFormContainer({initialValues}: IProps) {
     );
 }
 
-function UploadAnimalForm(/* {handleChange, handleBlur, values}: FormikProps<IAnimalFormValues> */) {
+function UploadAnimalForm() {
     const { isSubmitting, isValid, setFieldValue, values } = useFormikContext<IAnimalFormValues>();
     const classes = useStyles();
     return (

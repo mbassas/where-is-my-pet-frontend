@@ -4,6 +4,7 @@ import { TextField, Button, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { useLocation } from 'react-router-dom';
 import Loader from '../Components/Loader';
+import PasswordInput from '../Components/Inputs/PasswordInput';
 
 
 function RecoverPassword() {
@@ -65,7 +66,7 @@ function RecoverPasswordWithoutToken () {
             {submitSuccess && <Alert severity="success">An email has been sent to your address. Please check your inbox.</Alert>}
             {submitError && <Alert severity="error">Ups - Something has gone wrong.</Alert>}
             {emptyField && <Alert severity="warning">Please, enter your username or email.</Alert>}
-            {invalidParams && <Alert severity="warning">Invalid username or password.</Alert>}
+            {invalidParams && <Alert severity="warning">Invalid username or email.</Alert>}
             <form onSubmit={onSubmit}>
                 <TextField
                     type="text"
@@ -132,7 +133,7 @@ function RecoverPasswordWithToken({token}: {token: string}) {
             {submitError && <Alert severity="error">Ups - Something has gone wrong.</Alert>}
             {passwordsDoNotMatch && <Alert severity="warning">Passwords do not match</Alert>}
             <form onSubmit={onSubmit}>
-                <TextField
+                <PasswordInput
                     type="password"
                     label="Password"
                     onChange={(e) => setPassword(e.currentTarget.value)}
@@ -140,7 +141,7 @@ function RecoverPasswordWithToken({token}: {token: string}) {
                     margin="normal"
                     fullWidth 
                 />
-                <TextField 
+                <PasswordInput 
                     type="password"
                     label="Repeat your password"
                     onChange={(e) => setPassword2(e.currentTarget.value)}

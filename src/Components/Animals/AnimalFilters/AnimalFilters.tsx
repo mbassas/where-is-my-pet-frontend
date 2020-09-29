@@ -141,7 +141,11 @@ const useStyles = makeStyles((theme) => ({
         position: "fixed",
         bottom: 5,
         right: 5,
-        zIndex: 1
+        zIndex: 1,
+        [theme.breakpoints.up("md")]: {
+            bottom: 10,
+            right: 10,
+        }
     },
     dialog: {
         minWidth: "80vw",

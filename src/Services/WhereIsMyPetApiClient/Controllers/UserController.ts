@@ -1,7 +1,7 @@
 import BaseController from "./BaseController";
 import $WhereIsMyPetApiClient from "../WhereIsMyPetApiClient";
 
-interface ISignUpParams {
+export interface ISignUpParams {
     name: string;
     surname: string;
     email: string;
