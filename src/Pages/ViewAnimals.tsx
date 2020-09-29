@@ -6,7 +6,7 @@ import AnimalFilters from '../Components/Animals/AnimalFilters/AnimalFilters';
 import { IAnimalFilters } from '../Hooks/useAnimals';
 
 function ViewAnimals() {
-    const [filters, setFilters] = React.useState<IAnimalFilters>({});
+    const [filters, setFilters] = React.useState<IAnimalFilters>();
     const classes = useStyles();
 
     return (

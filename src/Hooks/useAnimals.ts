@@ -31,6 +31,7 @@ function useAnimals(filters?: IAnimalFilters) {
             currentAnimals = [];
         }
 
+        const pageSize = 6;
         try {
             const {data} = await $WhereIsMyPetApiClient.Animals.GetAnimals({
                 breed: breed,
@@ -39,11 +40,11 @@ function useAnimals(filters?: IAnimalFilters) {
                 lat: lat,
                 lng: lng,
                 start: currentAnimals.length,
-                count: Math.min(),
+                count: pageSize,
             });
     
             setAnimals(currentAnimals.concat(data));
-            setHasMore(data.length === 10);
+            setHasMore(data.length === pageSize);
         } catch (e) {
             console.error(e);
         } finally {
