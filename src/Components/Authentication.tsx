@@ -13,7 +13,7 @@ export const AuthenticationContext = React.createContext<IAuthenticationContextV
     userInfo: null,
     loadUserData: () => {},
     logout: () => {},
-    userLoading: false
+    userLoading: true
 });
 
 function AuthenticationProvider ({children}: {children: React.ReactNode}) {
@@ -27,8 +27,8 @@ function AuthenticationProvider ({children}: {children: React.ReactNode}) {
     async function loadUserData() {
         setUserLoading(true);
         const userInfo = await $WhereIsMyPetApiClient.Users.GetUserInfo();
-        setUserLoading(false);
         setUserInfo(userInfo?.data || null)
+        setUserLoading(false);
     }
     function logout() {
         $WhereIsMyPetApiClient.clearToken();

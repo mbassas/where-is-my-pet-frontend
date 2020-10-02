@@ -25,7 +25,6 @@ function LocationInput({ onChange = () => { }, inputProps, value, autolocate = t
         if (!location) {
             return;
         }
-        console.log(location);
 
         const newValue = `${location.address.postcode || ""} ${location.address.town || ""}`.trim();
         setDisplayValue(newValue);

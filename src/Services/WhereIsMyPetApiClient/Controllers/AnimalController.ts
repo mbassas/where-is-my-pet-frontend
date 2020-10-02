@@ -67,11 +67,17 @@ class AnimalsController extends BaseController {
         return `${Config.BASE_URL}/animals/${id}/${imageName}.png`;
     }
 
-    public GetAnimals (params?: IGetAnimalsParams) {
+    public GetAnimals (params: IGetAnimalsParams = {}) {
+        const queryParams: any = {};
+        Object.entries(params).forEach(([key, value]) => {
+            if(value) {
+                queryParams[key] = value;
+            }
+        });
         return this.makeRequest <IAnimal[]>({
             method: "GET",
             url: `/animals`,
-            queryParams: params,
+            queryParams: queryParams,
         });
     }
 

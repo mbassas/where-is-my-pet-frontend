@@ -1,7 +1,7 @@
 import React from "react";
 import $WhereIsMyPetApiClient from "../../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient";
 import { IUser } from "../../Services/WhereIsMyPetApiClient/Controllers/UserController";
-import { makeStyles, Snackbar } from "@material-ui/core";
+import { Snackbar } from "@material-ui/core";
 import MaterialTable from "material-table";
 import { Alert } from "@material-ui/lab";
 
