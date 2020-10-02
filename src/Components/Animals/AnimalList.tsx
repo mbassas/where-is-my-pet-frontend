@@ -33,7 +33,7 @@ function AnimalList({ filters, limit = 0 }: IProps) {
             {
                 (hasMore && !limitReached) && (
                     <div className={classes.viewMoreButton}>
-                        <Button variant="outlined" onClick={() => getMoreAnimals()}>
+                        <Button variant="contained" color="primary" onClick={() => getMoreAnimals()}>
                             View more
                         </Button>
                     </div>

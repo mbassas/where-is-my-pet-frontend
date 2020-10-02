@@ -46,7 +46,7 @@ function SignInFormContainer(props: IProps) {
         }
 
         if (!values.username) {
-            errors.username = "You must enter a username";
+            errors.username = "You must enter a username or email";
         }
         return errors;
     }
@@ -82,7 +82,7 @@ function SignInForm({ submitError, onSuccess }: { submitError: string, onSuccess
                     fullWidth
                     component={TextField}
                     name="username"
-                    label="Username"
+                    label="Username or email"
                     variant="outlined"
                     className={classes.input}
                 />

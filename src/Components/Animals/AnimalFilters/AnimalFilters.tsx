@@ -51,7 +51,7 @@ function AnimalFilters ({onChange}: IProps) {
     const history = useHistory();
 
     React.useEffect(() => {
-        onChange(filters);
+        onChange(filters || {});
         history.push(`/search?${getQueryString(filters)}`);
     }, [filters]);
 

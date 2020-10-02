@@ -58,7 +58,7 @@ function useAnimals(filters?: IAnimalFilters) {
         }
 
         getMoreAnimals(true);
-    }, [breed, species, status, lat, lng]);
+    }, [filters]);
 
     return {
         animals,

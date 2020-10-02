@@ -13,6 +13,7 @@ import { ReactComponent as PawsIcon } from './Icons/paws.svg';
 import ImagePreviewModal from './ImagePreviewModal';
 import AnimalLocationMap from './AnimalLocationMap';
 import useAuthentication from '../Hooks/useAuthentication';
+import ContactUserModalContainer from '../Pages/ContactUserModal';
 
 interface IProps extends IAnimal {
     showDetails?: boolean;
@@ -21,119 +22,140 @@ interface IProps extends IAnimal {
 
 function AnimalCard(props: IProps) {
     const classes = useStyles();
-    const [showImagePreviewModal, setShowImagePreviewModal ] = React.useState(false);
-    const {loadUserData, userInfo} = useAuthentication();
+    const [showImagePreviewModal, setShowImagePreviewModal] = React.useState(false);
+    const [showContactModal, setShowContactModal] = React.useState(false);
+    const { loadUserData, userInfo } = useAuthentication();
 
     return (
-        <Card className={classes.root}>
-            {props.species === "CAT" && <CatIcon className={classes.animalBadge} />}
-            {props.species === "DOG" && <DogIcon className={classes.animalBadge} />}
-            {props.species === "OTHER" && <PawsIcon className={classes.animalBadge} />}
-            <CardActionArea>
-                <CardMedia
-                    className={classes.media}
-                    image={$WhereIsMyPetApiClient.Animals.Image(props.id, props.image_name)}
-                    component={Link} to={`/view-animal/${props.id}`}
-                    onClick={() => setShowImagePreviewModal(true)}
-                >
-                    <div className={classes.chips}>
-                        <Chip icon={<Pets />} label={props.status} color={props.status == "LOST" ? "secondary" : "primary"} />
-                        <Chip icon={<CalendarToday />} label={moment(props.publication_date).local().fromNow()} />
-                        <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
-                        {props.recovered && <Chip label={"RECOVERED"} />}
-                    </div>
-                </CardMedia>
-            </CardActionArea>
-            {props.showDetails && (
-            <>
-            { showImagePreviewModal &&
-                <ImagePreviewModal onClose={() => setShowImagePreviewModal(false)}>
-                    <img src={$WhereIsMyPetApiClient.Animals.Image(props.id, props.image_name)} />
-                </ImagePreviewModal>
-            }
-                <CardContent className={classes.content}>
-                    <div>
-                        <b className={classes.label}>Publication date:</b>
-                        {moment(props.publication_date).local().format("DD/MM/YYYY HH:mm")}
-                    </div>
-
-                    <div className={classes.location}>
-                        <AnimalLocationMap
-                            lat={props.lat}
-                            lng={props.lng}
-                            className={classes.map}
-                        />
-                        <div>
-                            {props.location}
+        <>
+            <ContactUserModalContainer
+                isOpen={showContactModal}
+                onClose={() => setShowContactModal(false)}
+                receiverId={props.user_id}
+            />
+            <Card className={classes.root}>
+                {props.species === "CAT" && <CatIcon className={classes.animalBadge} />}
+                {props.species === "DOG" && <DogIcon className={classes.animalBadge} />}
+                {props.species === "OTHER" && <PawsIcon className={classes.animalBadge} />}
+                <CardActionArea>
+                    <CardMedia
+                        className={classes.media}
+                        image={$WhereIsMyPetApiClient.Animals.Image(props.id, props.image_name)}
+                        component={Link} to={`/view-animal/${props.id}`}
+                        onClick={() => setShowImagePreviewModal(true)}
+                    >
+                        <div className={classes.chips}>
+                            <Chip icon={<Pets />} label={props.status} color={props.status === "LOST" ? "secondary" : "primary"} />
+                            <Chip icon={<CalendarToday />} label={moment(props.publication_date).local().fromNow()} />
+                            <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
+                            {props.recovered && <Chip label={"RECOVERED"} />}
                         </div>
-                    </div>
+                    </CardMedia>
+                </CardActionArea>
+                {props.showDetails && (
+                    <>
+                        {showImagePreviewModal &&
+                            <ImagePreviewModal onClose={() => setShowImagePreviewModal(false)}>
+                                <img src={$WhereIsMyPetApiClient.Animals.Image(props.id, props.image_name)} />
+                            </ImagePreviewModal>
+                        }
+                        <CardContent className={classes.content}>
+                            <div>
+                                <b className={classes.label}>Publication date:</b>
+                                {moment(props.publication_date).local().format("DD/MM/YYYY HH:mm")}
+                            </div>
 
-                    <div>
-                        <b className={classes.label}>Species:</b>{props.species}
-                    </div>
+                            <div className={classes.location}>
+                                <AnimalLocationMap
+                                    lat={props.lat}
+                                    lng={props.lng}
+                                    className={classes.map}
+                                />
+                                <div>
+                                    {props.location}
+                                </div>
+                            </div>
 
-                    {props.breed && (
-                        <div>
-                            <b className={classes.label}>Breed:</b> {props.breed}
-                        </div>
-                    )}
+                            <div>
+                                <b className={classes.label}>Species:</b>{props.species}
+                            </div>
 
-                    <div>
-                        <b className={classes.label}>Status:</b> {props.status}
-                    </div>
+                            {props.breed && (
+                                <div>
+                                    <b className={classes.label}>Breed:</b> {props.breed}
+                                </div>
+                            )}
 
-                    {props.size && (
-                        <div>
-                            <b className={classes.label}>Size:</b> {props.size}
-                        </div>)
-                    }
+                            <div>
+                                <b className={classes.label}>Status:</b> {props.status}
+                            </div>
 
-                    {props.color && (
-                        <div>
-                            <b className={classes.label}>Color:</b> {props.color}
-                        </div>)
-                    }
-
-                    {props.age && (
-                        <div>
-                            <b className={classes.label}>Age:</b> {props.age}
-                        </div>)
-                    }
-
-                    {props.gender && (
-                        <div>
-                            <b className={classes.label}>Gender:</b> {props.gender}
-                        </div>)
-                    }
-
-                    {props.name && (
-                        <div>
-                            <b className={classes.label}>Name:</b> {props.name}
-                        </div>)
-                    }
-                    {!props.recovered && userInfo?.id && userInfo.id === props.user_id && (
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.recovered}
-                            onClick={
-                                async () => {
-                                    loadUserData();
-                                    await $WhereIsMyPetApiClient.Animals.UpdateAnimal(props.id);
-                                    if(props.loadAnimal) {
-                                        props.loadAnimal();
-                                    } 
-                                }
+                            {props.size && (
+                                <div>
+                                    <b className={classes.label}>Size:</b> {props.size}
+                                </div>)
                             }
-                        >
-                            Mark as recovered
-                        </Button>
-                        )}
-                </CardContent>
-                </>
-            )}
-        </Card>
+
+                            {props.color && (
+                                <div>
+                                    <b className={classes.label}>Color:</b> {props.color}
+                                </div>)
+                            }
+
+                            {props.age && (
+                                <div>
+                                    <b className={classes.label}>Age:</b> {props.age}
+                                </div>)
+                            }
+
+                            {props.gender && (
+                                <div>
+                                    <b className={classes.label}>Gender:</b> {props.gender}
+                                </div>)
+                            }
+
+                            {props.name && (
+                                <div>
+                                    <b className={classes.label}>Name:</b> {props.name}
+                                </div>)
+                            }
+                            <div className={classes.buttonsContainer}>
+                                {!props.recovered && userInfo?.id === props.user_id && (
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        fullWidth
+                                        onClick={
+                                            async () => {
+                                                loadUserData();
+                                                await $WhereIsMyPetApiClient.Animals.UpdateAnimal(props.id);
+                                                if (props.loadAnimal) {
+                                                    props.loadAnimal();
+                                                }
+                                            }
+                                        }
+                                    >
+                                        Mark as recovered
+                                    </Button>
+                                )}
+                                {props.user_id !== userInfo?.id && (
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        fullWidth
+                                        onClick={() => setShowContactModal(true)}
+                                    >
+                                        Contact User
+                                    </Button>
+                                )}
+                            </div>
+                        </CardContent>
+                    </>
+                )}
+            </Card>
+        </>
     );
 }
 
@@ -187,8 +209,8 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.down("sm")]: {
             order: 8,
             gridColumn: "span 2",
-                borderTop: `1px solid ${theme.palette.divider}`,
-                paddingTop: "10px",
+            borderTop: `1px solid ${theme.palette.divider}`,
+            paddingTop: "10px",
         }
     },
     locationImage: {
@@ -201,15 +223,9 @@ const useStyles = makeStyles(theme => ({
         height: "100%",
         minHeight: "250px",
     },
-    recovered: {
-        [theme.breakpoints.up("sm")]: {
-            gridColumn: "span 2",
-        },
+    buttonsContainer: {
         gridColumn: "1/-1",
-        [theme.breakpoints.up("md")]: {
-        width: "fit-content",
-        }
-    }
+    },
 }));
 
 export default AnimalCard;

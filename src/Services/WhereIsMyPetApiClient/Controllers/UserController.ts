@@ -93,6 +93,19 @@ class UsersController extends BaseController {
         })
     }
 
+    public async ContactUser(receiverId: number, message: string, phone: boolean, email: boolean) {
+
+        return this.makeRequest<void>({
+            method: "POST",
+            url: `/users/${receiverId}/contact`,
+            params: {
+                message: message,
+                phone: phone,
+                email: email
+            }
+        })
+    }
+
 }
 
 export default UsersController;
