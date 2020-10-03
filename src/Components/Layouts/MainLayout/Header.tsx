@@ -1,23 +1,27 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, makeStyles, Theme, createStyles } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, makeStyles, Theme, createStyles, Badge } from '@material-ui/core';
 import MenuIcon from "@material-ui/icons/Menu";
 import UserInfoButton from './UserInfoButton';
 import { Link } from 'react-router-dom';
+import useAuthentication from '../../../Hooks/useAuthentication';
 
 interface IProps {
     openSidebar: () => void;
 }
 
 function Header({openSidebar}: IProps) {
-
     const classes = useStyles();
+    const {notifications} = useAuthentication();
 
+    const numUnread = notifications.filter(({read}) => !read).length;
     return (
         <div className={classes.root}>
             <AppBar position="fixed">
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openSidebar}>
-                        <MenuIcon />
+                        <Badge badgeContent={numUnread} color="secondary">
+                            <MenuIcon />
+                        </Badge>
                     </IconButton>
                     <Typography variant="h6" className={classes.title} component={Link} to ="/">
                         Where is my pet

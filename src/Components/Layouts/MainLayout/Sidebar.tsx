@@ -1,5 +1,5 @@
 import React from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, makeStyles, ListSubheader } from "@material-ui/core";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Divider, makeStyles, ListSubheader, Badge } from "@material-ui/core";
 import Settings from "@material-ui/icons/SettingsOutlined";
 import Help from "@material-ui/icons/HelpOutlined";
 import Home from "@material-ui/icons/HomeOutlined";
@@ -23,7 +23,9 @@ interface IProps {
 function Sidebar({close, isOpen}: IProps) {
     const classes = useStyles();
     const [showLoginModal, setShowLoginModal] = React.useState(false);
-    const {userInfo, logout} = useAuthentication();
+    const {userInfo, notifications, logout} = useAuthentication();
+    
+    const numUnread = notifications.filter(({read}) => !read).length;
     return (
         <>
             <LoginModal 
@@ -39,7 +41,7 @@ function Sidebar({close, isOpen}: IProps) {
                     {userInfo && (
                         <List>
                             <SidebarLink to="" label="My Profile" Icon={<AccountCircle />} disabled/>
-                            <SidebarLink to="" label="Notifications" Icon={<Notifications />} disabled />
+                            <SidebarLink to="/user/notifications" label="Notifications" Icon={<Badge badgeContent={numUnread} color="primary"><Notifications /></Badge>} />
                             <SidebarLink label="Logout" Icon={<Exit />} onClick={logout} />
                         </List>
                     )}
