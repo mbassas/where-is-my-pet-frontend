@@ -10,6 +10,7 @@ import MainLayout from './Components/Layouts/MainLayout/MainLayout';
 import AuthenticationProvider from './Components/Authentication';
 import Landing from './Pages/Landing';
 import AdminPages from './Pages/Admin';
+import UserPages from './Pages/User';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -32,6 +33,9 @@ ReactDOM.render(
             </Route>
             <Route path="/admin">
               <AdminPages />
+            </Route>
+            <Route path="/user">
+              <UserPages />
             </Route>
             <Route path="/">
               <Landing />
