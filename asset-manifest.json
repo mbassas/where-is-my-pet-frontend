@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/where-is-my-pet-frontend/static/js/main.e419c9bc.chunk.js",
-    "main.js.map": "/where-is-my-pet-frontend/static/js/main.e419c9bc.chunk.js.map",
+    "main.js": "/where-is-my-pet-frontend/static/js/main.cdffb9d1.chunk.js",
+    "main.js.map": "/where-is-my-pet-frontend/static/js/main.cdffb9d1.chunk.js.map",
     "runtime-main.js": "/where-is-my-pet-frontend/static/js/runtime-main.7639b268.js",
     "runtime-main.js.map": "/where-is-my-pet-frontend/static/js/runtime-main.7639b268.js.map",
     "static/css/2.bcddf60d.chunk.css": "/where-is-my-pet-frontend/static/css/2.bcddf60d.chunk.css",
-    "static/js/2.8765a945.chunk.js": "/where-is-my-pet-frontend/static/js/2.8765a945.chunk.js",
-    "static/js/2.8765a945.chunk.js.map": "/where-is-my-pet-frontend/static/js/2.8765a945.chunk.js.map",
+    "static/js/2.f4c4a33f.chunk.js": "/where-is-my-pet-frontend/static/js/2.f4c4a33f.chunk.js",
+    "static/js/2.f4c4a33f.chunk.js.map": "/where-is-my-pet-frontend/static/js/2.f4c4a33f.chunk.js.map",
     "index.html": "/where-is-my-pet-frontend/index.html",
-    "precache-manifest.09b2bddc224fd9c4e9fd20596b403f93.js": "/where-is-my-pet-frontend/precache-manifest.09b2bddc224fd9c4e9fd20596b403f93.js",
+    "precache-manifest.158b11b22715ea5621321b34ccdbf8f8.js": "/where-is-my-pet-frontend/precache-manifest.158b11b22715ea5621321b34ccdbf8f8.js",
     "service-worker.js": "/where-is-my-pet-frontend/service-worker.js",
     "static/css/2.bcddf60d.chunk.css.map": "/where-is-my-pet-frontend/static/css/2.bcddf60d.chunk.css.map",
-    "static/js/2.8765a945.chunk.js.LICENSE.txt": "/where-is-my-pet-frontend/static/js/2.8765a945.chunk.js.LICENSE.txt",
+    "static/js/2.f4c4a33f.chunk.js.LICENSE.txt": "/where-is-my-pet-frontend/static/js/2.f4c4a33f.chunk.js.LICENSE.txt",
     "static/media/cat.872640e1.svg": "/where-is-my-pet-frontend/static/media/cat.872640e1.svg",
     "static/media/dog.9694d09e.svg": "/where-is-my-pet-frontend/static/media/dog.9694d09e.svg",
     "static/media/paws.08b61ba8.svg": "/where-is-my-pet-frontend/static/media/paws.08b61ba8.svg"
@@ -19,7 +19,7 @@
   "entrypoints": [
     "static/js/runtime-main.7639b268.js",
     "static/css/2.bcddf60d.chunk.css",
-    "static/js/2.8765a945.chunk.js",
-    "static/js/main.e419c9bc.chunk.js"
+    "static/js/2.f4c4a33f.chunk.js",
+    "static/js/main.cdffb9d1.chunk.js"
   ]
 }
