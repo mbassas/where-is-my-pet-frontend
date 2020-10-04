@@ -3,7 +3,7 @@ import AnimalImageInput from '../Components/UploadAnimalForm/Fields/AnimalImageI
 import UploadAnimalFormContainer, { IAnimalFormValues } from '../Components/UploadAnimalForm/UploadAnimalForm';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import { Button, makeStyles} from '@material-ui/core';
-import AnimalList from '../Components/Animals/AnimalList';
+import AnimalListContainer from '../Components/Animals/AnimalListContainer';
 import useAnimals from '../Hooks/useAnimals';
 import Loader from '../Components/Loader';
 import { getLocation } from '../Services/Geolocation/GeolocationService';
@@ -83,7 +83,7 @@ function UploadAnimal() {
                 </Button>
             </div>
             <div className={classes.spacer} />
-            <AnimalList
+            <AnimalListContainer
                 limit={3} 
                 filters={{
                     breed: formInitialValues.breed,

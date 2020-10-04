@@ -40,7 +40,7 @@ function Sidebar({close, isOpen}: IProps) {
                 >
                     {userInfo && (
                         <List>
-                            <SidebarLink to="" label="My Profile" Icon={<AccountCircle />} disabled/>
+                            <SidebarLink to="/user/animals" label="My Profile" Icon={<AccountCircle />} />
                             <SidebarLink to="/user/notifications" label="Notifications" Icon={<Badge badgeContent={numUnread} color="primary"><Notifications /></Badge>} />
                             <SidebarLink label="Logout" Icon={<Exit />} onClick={logout} />
                         </List>

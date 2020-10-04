@@ -1,47 +1,41 @@
 import * as React from "react";
 import AnimalCard from "../AnimalCard";
 import { makeStyles, Button } from "@material-ui/core";
-import useAnimals, { IAnimalFilters } from "../../Hooks/useAnimals";
 import Loader from "../Loader";
 import NotFound from "../../Pages/NotFound";
+import { IAnimal } from "../../Services/WhereIsMyPetApiClient/Controllers/AnimalController";
 
 interface IProps {
-    filters?: IAnimalFilters;
-    limit?: number;
+    animals?: IAnimal[];
+    isLoading: boolean;
+    hasMore?: boolean;
+    getMoreAnimals?: () => void;
 }
 
-function AnimalList({ filters, limit = 0 }: IProps) {
+function AnimalList({ animals, isLoading, hasMore = false, getMoreAnimals = () => {} }: IProps) {
     const classes = useStyles();
-    const { animals, isLoading, getMoreAnimals, hasMore } = useAnimals(filters);
 
-    let items = animals;
-
-    if (limit) {
-        items = items?.slice(0, limit);
-    }
-
-    const limitReached = limit && animals && animals.length >= limit;
     return (
         <>
             <div className={classes.list}>
-                {isLoading && <Loader position="fixed"/>}
-                { !isLoading && !animals?.length && <NotFound />}
+                {isLoading && <Loader position="fixed" />}
+                {!isLoading && !animals?.length && <NotFound />}
                 {
-                    items?.map(((animal) => <AnimalCard key={`animal_${animal.id}`} {...animal} />))
+                    animals?.map(((animal) => <AnimalCard key={`animal_${animal.id}`} {...animal} />))
                 }
             </div>
             {
-                (hasMore && !limitReached) && (
+                hasMore && (
                     <div className={classes.viewMoreButton}>
                         <Button variant="contained" color="primary" onClick={() => getMoreAnimals()}>
                             View more
-                        </Button>
+                    </Button>
                     </div>
                 )
             }
         </>
     )
-}
+};
 
 const useStyles = makeStyles(theme => ({
     list: {
