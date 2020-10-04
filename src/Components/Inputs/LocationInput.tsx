@@ -6,7 +6,7 @@ interface IOwnProps {
     inputProps?: TextFieldProps;
     autolocate?: boolean;
     onChange?: (lat: number | null, lng: number | null, location: string) => void;
-    value?: {lat: number, lng: number}; 
+    value?: {lat: number, lng: number};
 }
 
 function LocationInput({ onChange = () => { }, inputProps, value, autolocate = true }: IOwnProps) {

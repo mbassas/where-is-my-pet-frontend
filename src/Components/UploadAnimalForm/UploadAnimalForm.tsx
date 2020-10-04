@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, FormikHelpers, Form, useFormikContext, Field } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { Button, makeStyles } from '@material-ui/core';
+import { Button, makeStyles, Snackbar } from '@material-ui/core';
 import LocationInput from '../Inputs/LocationInput';
 import SpeciesInput from './Fields/SpeciesInput';
 import AnimalStatusInput from './Fields/StatusInput';
@@ -12,6 +12,7 @@ import $WhereIsMyPetApiClient from '../../Services/WhereIsMyPetApiClient/WhereIs
 import { Redirect } from 'react-router-dom';
 import AnimalImagePreview from './AnimalImagePreview';
 import Loader from '../Loader';
+import { Alert } from '@material-ui/lab';
 
 export enum EAnimalStatus {
     LOST = "LOST",
@@ -67,12 +68,17 @@ interface IProps {
 
 function UploadAnimalFormContainer({initialValues}: IProps) {
     const [createdAnimalId, setCreatedAnimalId] = React.useState(-1);
+    const [submitError, setSubmitError] = React.useState("");
     async function onSubmit(values: IAnimalFormValues, { setSubmitting }: FormikHelpers<IAnimalFormValues>) {
         try {
             const response = await $WhereIsMyPetApiClient.Animals.UploadAnimal(values);
             setCreatedAnimalId(response.data.id);
-        } catch{
-
+        } catch (e) {
+            if (e?.response?.status === 403) {
+                setSubmitError("Your account is suspended. Check your email for further details.");
+            } else {
+                setSubmitError("Something went wrong. Please try again later.");
+            }
         } finally {
             setSubmitting(false);
         }
@@ -94,27 +100,36 @@ function UploadAnimalFormContainer({initialValues}: IProps) {
             // @ts-ignore
             errors.lng = "Location is required";
         }
+        if (isNaN(parseFloat(values.age))) {
+            // @ts-ignore
+            errors.age = "Age must be a number";
+        }
         return errors;
     }
 
     return (
         <>
-        <Formik
-            initialValues={{...defaultInitialValues, ...initialValues}}
-            onSubmit={onSubmit}
-            validate={validate}
-        >
-            <UploadAnimalForm />
-        </Formik>
-        {createdAnimalId !== -1 && (
-            <Redirect to={`/view-animal/${createdAnimalId}`}/>
-        )}
+            <Formik
+                initialValues={{...defaultInitialValues, ...initialValues}}
+                onSubmit={onSubmit}
+                validate={validate}
+            >
+                <UploadAnimalForm />
+            </Formik>
+            {createdAnimalId !== -1 && (
+                <Redirect to={`/view-animal/${createdAnimalId}`}/>
+            )}
+            <Snackbar open={Boolean(submitError)} autoHideDuration={6000} onClose={() => setSubmitError("")}>
+                <Alert onClose={() => setSubmitError("")} severity="error">
+                    {submitError}
+                </Alert>
+            </Snackbar>
         </>
     );
 }
 
 function UploadAnimalForm() {
-    const { isSubmitting, isValid, setFieldValue, values } = useFormikContext<IAnimalFormValues>();
+    const { isSubmitting, isValid, setFieldValue, values, errors } = useFormikContext<IAnimalFormValues>();
     const classes = useStyles();
     return (
         <Form className={classes.form}>
@@ -149,7 +164,9 @@ function UploadAnimalForm() {
             <LocationInput
                 inputProps={{
                     label: "Enter your town or postcode",
-                    className: classes.locationInput
+                    className: classes.locationInput,
+                    error: Boolean(errors.lat),
+                    helperText: errors.lat,
                 }}
                 onChange={(lat, lng, location) => {
                     setFieldValue("lat", lat);
@@ -166,7 +183,7 @@ function UploadAnimalForm() {
             >
                 UPLOAD
             </Button>
-            {isSubmitting && <Loader />}
+            {isSubmitting && <Loader position="fixed"/>}
         </Form>
     );
 }

@@ -48,12 +48,12 @@ function AnimalCard(props: IProps) {
                         onClick={() => setShowImagePreviewModal(true)}
                     >
                         <div className={classes.chips}>
-                            <Chip icon={<Pets />} label={props.status} color={props.status === "LOST" ? "secondary" : "primary"} />
+                            <Chip icon={<Pets />} label={props.status.toLowerCase()} color={props.status === "LOST" ? "secondary" : "primary"} />
                             <Chip icon={<CalendarToday />} label={moment(props.publication_date).local().fromNow()} />
                             <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
-                            {props.recovered && <Chip label={"RECOVERED"} />}
+                            {props.recovered && <Chip label={"Recovered"} />}
                         </div>
-                        {(props.setAnimalBookmark && userInfo?.id !== props.user_id) && (
+                        {(props.setAnimalBookmark && userInfo && userInfo?.id !== props.user_id) && (
                             <>
                                 {props.bookmark && (
                                     <Tooltip title="Click here to remove the bookmark" placement="top">
@@ -111,46 +111,46 @@ function AnimalCard(props: IProps) {
                             </div>
 
                             <div>
-                                <b className={classes.label}>Species:</b>{props.species}
+                                <b className={classes.label}>Species:</b> <span className={classes.value}>{props.species.toLowerCase()}</span>
                             </div>
 
                             {props.breed && (
                                 <div>
-                                    <b className={classes.label}>Breed:</b> {props.breed}
+                                    <b className={classes.label}>Breed:</b> <span className={classes.value}>{props.breed.toLowerCase()}</span>
                                 </div>
                             )}
 
                             <div>
-                                <b className={classes.label}>Status:</b> {props.status}
+                                <b className={classes.label}>Status:</b> <span className={classes.value}>{props.status.toLowerCase()}</span>
                             </div>
 
                             {props.size && (
                                 <div>
-                                    <b className={classes.label}>Size:</b> {props.size}
+                                    <b className={classes.label}>Size:</b> <span className={classes.value}>{props.size.toLowerCase()}</span>
                                 </div>)
                             }
 
                             {props.color && (
                                 <div>
-                                    <b className={classes.label}>Color:</b> {props.color}
+                                    <b className={classes.label}>Color:</b> <span className={classes.value}>{props.color.toLowerCase()}</span>
                                 </div>)
                             }
 
                             {props.age && (
                                 <div>
-                                    <b className={classes.label}>Age:</b> {props.age}
+                                    <b className={classes.label}>Age:</b> <span className={classes.value}>{props.age}</span>
                                 </div>)
                             }
 
                             {props.gender && (
                                 <div>
-                                    <b className={classes.label}>Gender:</b> {props.gender}
+                                    <b className={classes.label}>Gender:</b> <span className={classes.value}>{props.gender.toLowerCase()}</span>
                                 </div>)
                             }
 
                             {props.name && (
                                 <div>
-                                    <b className={classes.label}>Name:</b> {props.name}
+                                    <b className={classes.label}>Name:</b> <span className={classes.value}>{props.name.toLowerCase()}</span>
                                 </div>)
                             }
                             <div className={classes.buttonsContainer}>
@@ -225,7 +225,8 @@ const useStyles = makeStyles(theme => ({
         },
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+        textTransform: "capitalize"
     },
     content: {
         display: "grid",
@@ -237,6 +238,9 @@ const useStyles = makeStyles(theme => ({
     },
     label: {
         display: "block"
+    },
+    value: {
+        textTransform: "capitalize",
     },
     location: {
         gridRow: "span 8",
