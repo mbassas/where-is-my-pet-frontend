@@ -91,6 +91,13 @@ class AnimalsController extends BaseController {
         });
     };
 
+    public GetAnimalsByUserId () {
+        return this.makeRequest <IAnimal[]>({
+            method: "GET",
+            url: `/animals/uploaded`
+        });
+    };
+
 }
 
 export default AnimalsController;

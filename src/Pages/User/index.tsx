@@ -3,6 +3,7 @@ import useAuthentication from "../../Hooks/useAuthentication";
 import Loader from "../../Components/Loader";
 import { Redirect, Switch, Route } from "react-router-dom";
 import NotificationsPage from "./Notifications";
+import UserAnimals from "./UserAnimals";
 
 function UserPages() {
     const {userInfo, userLoading} = useAuthentication();
@@ -23,6 +24,9 @@ function UserPages() {
         <Switch>
             <Route path="/user/notifications">
               <NotificationsPage />
+            </Route>
+            <Route path="/user/animals">
+              <UserAnimals />
             </Route>
             <Redirect to="/" />
         </Switch>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles} from '@material-ui/core';
 
-import AnimalList from '../Components/Animals/AnimalList';
+import AnimalListContainer from '../Components/Animals/AnimalListContainer';
 import AnimalFilters from '../Components/Animals/AnimalFilters/AnimalFilters';
 import { IAnimalFilters } from '../Hooks/useAnimals';
 
@@ -12,7 +12,7 @@ function ViewAnimals() {
     return (
         <div className={classes.container}>
             <AnimalFilters onChange={(newFilters) => setFilters(newFilters)}/>
-            <AnimalList filters={filters}/>
+            <AnimalListContainer filters={filters}/>
         </div>
     );
 };
