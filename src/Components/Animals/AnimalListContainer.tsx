@@ -8,7 +8,7 @@ interface IProps {
 }
 
 function AnimalListContainer({ filters, limit = 0 }: IProps) {
-    const { animals, isLoading, getMoreAnimals, hasMore } = useAnimals(filters);
+    const { animals, isLoading, getMoreAnimals, hasMore, setAnimalBookmark } = useAnimals(filters);
 
     let items = animals;
 
@@ -18,7 +18,13 @@ function AnimalListContainer({ filters, limit = 0 }: IProps) {
 
     const limitReached = Boolean(limit && animals && animals.length >= limit);
     return (
-        <AnimalList animals={animals} isLoading={isLoading} getMoreAnimals={getMoreAnimals} hasMore={hasMore && !limitReached} />
+        <AnimalList 
+            animals={animals}
+            isLoading={isLoading}
+            getMoreAnimals={getMoreAnimals}
+            hasMore={hasMore && !limitReached} 
+            setAnimalBookmark={setAnimalBookmark}
+        />
     )
 }
 

@@ -10,9 +10,10 @@ interface IProps {
     isLoading: boolean;
     hasMore?: boolean;
     getMoreAnimals?: () => void;
+    setAnimalBookmark?: (animalId: number, value: boolean) => void;
 }
 
-function AnimalList({ animals, isLoading, hasMore = false, getMoreAnimals = () => {} }: IProps) {
+function AnimalList({ animals, isLoading, hasMore = false, getMoreAnimals = () => {}, setAnimalBookmark }: IProps) {
     const classes = useStyles();
 
     return (
@@ -21,7 +22,7 @@ function AnimalList({ animals, isLoading, hasMore = false, getMoreAnimals = () =
                 {isLoading && <Loader position="fixed" />}
                 {!isLoading && !animals?.length && <NotFound />}
                 {
-                    animals?.map(((animal) => <AnimalCard key={`animal_${animal.id}`} {...animal} />))
+                    animals?.map(((animal) => <AnimalCard key={`animal_${animal.id}`} {...animal} setAnimalBookmark={setAnimalBookmark} />))
                 }
             </div>
             {

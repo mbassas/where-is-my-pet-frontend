@@ -3,7 +3,7 @@ import Config from "../../../config";
 import $WhereIsMyPetApiClient from "../WhereIsMyPetApiClient";
 
 interface IMakeRequestParams {
-    method: "GET" | "POST" | "PATCH";
+    method: "GET" | "POST" | "PATCH" | "DELETE";
     url: string;
     params?: object;
     queryParams?: object;

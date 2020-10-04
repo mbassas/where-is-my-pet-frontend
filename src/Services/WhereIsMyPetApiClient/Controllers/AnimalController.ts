@@ -20,6 +20,7 @@ export interface IAnimal {
     image_name: string;
     distance?: number;
     recovered?: boolean;
+    bookmark?:boolean;
 }
 
 export interface IGetAnimalsParams {
