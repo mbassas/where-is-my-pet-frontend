@@ -19,6 +19,27 @@ function ViewAnimal() {
                 .then(({ data }) => setAnimal(data))
                 .catch(() => setNotFound(true))
     }
+
+    async function setAnimalBookmark(animalId: number, value: boolean) {
+        if (!animal) {
+            return;
+        }
+
+        try {
+            if (value) {
+                await $WhereIsMyPetApiClient.Bookmarks.CreateBookmark(animalId);
+            } else {
+                await $WhereIsMyPetApiClient.Bookmarks.deleteBookmark(animalId);
+            }
+
+            setAnimal({
+                ...animal,
+                bookmark: value,
+            });
+        } catch(e) {
+
+        }
+    }
     
     React.useEffect(() => {
         loadAnimal();
@@ -33,7 +54,7 @@ function ViewAnimal() {
     }
   
     return (
-        <AnimalCard showDetails {...animal} loadAnimal={loadAnimal}/>
+        <AnimalCard showDetails {...animal} loadAnimal={loadAnimal} setAnimalBookmark={setAnimalBookmark}/>
     )
 }
 

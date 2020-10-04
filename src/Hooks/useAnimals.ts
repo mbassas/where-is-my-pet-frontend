@@ -23,6 +23,30 @@ function useAnimals(filters?: IAnimalFilters) {
     const lat = filters?.lat;
     const lng = filters?.lng;
 
+    async function setAnimalBookmark(animalId: number, value: boolean) {
+        if (!animals) {
+            return;
+        }
+
+        try {
+            if (value) {
+                await $WhereIsMyPetApiClient.Bookmarks.CreateBookmark(animalId);
+            } else {
+                await $WhereIsMyPetApiClient.Bookmarks.deleteBookmark(animalId);
+            }
+
+            const animal = animals?.find(i => i.id === animalId);
+            if (!animal) {
+                return;
+            }
+            animal.bookmark = value;
+
+            setAnimals([...animals]);
+        } catch(e) {
+
+        }
+    }
+
     async function getMoreAnimals(emptyList = false) {
         setIsLoading(true);
         
@@ -64,7 +88,8 @@ function useAnimals(filters?: IAnimalFilters) {
         animals,
         isLoading,
         getMoreAnimals,
-        hasMore
+        hasMore,
+        setAnimalBookmark
     };
 }
 

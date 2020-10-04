@@ -4,6 +4,7 @@ import SpeciesController from './Controllers/SpeciesController';
 import BreedsController from './Controllers/BreedController';
 import ImageRecognitionController from './Controllers/ImageRecognitionController';
 import NotificationController from './Controllers/NotificationController';
+import BookmarkController from './Controllers/BookmarkController';
 
 class WhereIsMyPetApiClient {
     public Users = new UsersController();
@@ -12,6 +13,7 @@ class WhereIsMyPetApiClient {
     public Breeds = new BreedsController();
     public ImageRecognition = new ImageRecognitionController();
     public Notifications = new NotificationController();
+    public Bookmarks = new BookmarkController();
 
     private token = "";
 

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { IAnimal } from '../Services/WhereIsMyPetApiClient/Controllers/AnimalController';
-import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles, Button } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, Chip, CardContent, makeStyles, Button, IconButton, Tooltip } from '@material-ui/core';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import moment from 'moment';
 import CalendarToday from '@material-ui/icons/CalendarTodayOutlined';
 import LocationOn from '@material-ui/icons/LocationOnOutlined';
+import Bookmark from '@material-ui/icons/Bookmark';
+import BookmarkBorder from '@material-ui/icons/BookmarkBorder';
 import Pets from '@material-ui/icons/Pets';
 import { ReactComponent as CatIcon } from './Icons/cat.svg';
 import { ReactComponent as DogIcon } from './Icons/dog.svg';
@@ -18,6 +20,7 @@ import ContactUserModalContainer from '../Pages/ContactUserModal';
 interface IProps extends IAnimal {
     showDetails?: boolean;
     loadAnimal?: () => void;
+    setAnimalBookmark?: (animal_id: number, value: boolean) => void;
 };
 
 function AnimalCard(props: IProps) {
@@ -50,6 +53,37 @@ function AnimalCard(props: IProps) {
                             <Chip icon={<LocationOn />} label={`${props.location} ${props.distance ? `(${props.distance.toFixed(1)}km)` : ""}`} />
                             {props.recovered && <Chip label={"RECOVERED"} />}
                         </div>
+                        {(props.setAnimalBookmark && userInfo?.id !== props.user_id) && (
+                            <>
+                                {props.bookmark && (
+                                    <Tooltip title="Click here to remove the bookmark" placement="top">
+                                        <Bookmark
+                                            className={classes.bookmarkButton}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+
+                                                // @ts-ignore
+                                                props.setAnimalBookmark(props.id, false)
+                                            }} />
+                                    </Tooltip>
+                                )}
+                                {!props.bookmark && (
+                                    <Tooltip title="Click here to bookmark this animal" placement="top">
+                                        <BookmarkBorder
+                                            className={classes.bookmarkButton}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+
+                                                // @ts-ignore
+                                                props.setAnimalBookmark(props.id, true);
+                                            }}
+                                        />
+                                    </Tooltip>
+                                )}
+                            </>
+                        )}
                     </CardMedia>
                 </CardActionArea>
                 {props.showDetails && (
@@ -226,6 +260,14 @@ const useStyles = makeStyles(theme => ({
     buttonsContainer: {
         gridColumn: "1/-1",
     },
+    bookmarkButton: {
+        position: "absolute",
+        top: "-12px",
+        height: "55px",
+        width: "55px",
+        right: "0px",
+        color: theme.palette.primary.main
+    }
 }));
 
 export default AnimalCard;
