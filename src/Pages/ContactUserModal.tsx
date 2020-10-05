@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Dialog, DialogContent, FormControlLabel, DialogTitle, DialogActions, Button, Snackbar } from '@material-ui/core';
+import { makeStyles, Dialog, DialogContent, FormControlLabel, DialogTitle, DialogActions, Button, Snackbar, FormGroup, FormControl, FormHelperText } from '@material-ui/core';
 import { TextField, Checkbox } from "formik-material-ui";
 import SendIcon from "@material-ui/icons/Send";
 import { Form, Formik, Field, FormikHelpers, useFormikContext } from 'formik';
@@ -31,12 +31,12 @@ function ContactUserModalContainer(props: IProps) {
     const classes = useStyles();
     const [submitError, setSubmitError] = React.useState(false);
     const [submitSuccess, setSubmitSuccess] = React.useState(false);
-    const {userInfo, loadUserData} = useAuthentication();
+    const { userInfo, loadUserData } = useAuthentication();
 
     if (!userInfo) {
         return (
             <LoginModal isOpen={props.isOpen && !userInfo} onClose={() => {
-                if($WhereIsMyPetApiClient.getToken()) {
+                if ($WhereIsMyPetApiClient.getToken()) {
                     loadUserData();
                 } else {
                     props.onClose();
@@ -98,8 +98,6 @@ function ContactUserModal() {
                 <DialogContent>
 
                     <div className={classes.paperContent}>
-                        
-                        
                         <div>
                             Write a message to send to the user:
                                 </div>
@@ -122,21 +120,27 @@ function ContactUserModal() {
                                     <Field
                                         component={Checkbox}
                                         color="primary"
-                                        name="email"
-                                    />
-                                }
-                                label="Include email"
-                            />
-                            <FormControlLabel
-                                control={
-                                    <Field
-                                        component={Checkbox}
-                                        color="primary"
                                         name="phone"
                                     />
                                 }
                                 label="Include phone"
                             />
+                            <FormControl>
+                                <FormControlLabel
+                                    control={
+                                        <Field
+                                            component={Checkbox}
+                                            color="primary"
+                                            name="email"
+                                        />
+                                    }
+                                    label="Include email"
+                                    checked={true}
+                                />
+                                <FormHelperText variant="outlined">
+                                    Email is always included so the user can answer to your message.
+                                </FormHelperText>
+                            </FormControl>
                         </div>
                     </div>
                 </DialogContent>
