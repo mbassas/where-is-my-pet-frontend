@@ -53,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
         position: "fixed",
         top: "10px",
         right: "10px",
-        zIndex: 1
+        zIndex: 1,
+        background: "rgba(255, 255, 255, .3)",
+        borderRadius: "100%"
     }
 }));
 
