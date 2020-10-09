@@ -100,7 +100,7 @@ function UploadAnimalFormContainer({initialValues}: IProps) {
             // @ts-ignore
             errors.lng = "Location is required";
         }
-        if (isNaN(parseFloat(values.age))) {
+        if (values.age && isNaN(parseFloat(values.age))) {
             // @ts-ignore
             errors.age = "Age must be a number";
         }
