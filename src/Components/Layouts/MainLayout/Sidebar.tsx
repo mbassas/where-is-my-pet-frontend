@@ -68,7 +68,7 @@ function Sidebar({close, isOpen}: IProps) {
                     <List>
                         <SidebarLink to="" label="Settings" Icon={<Settings />} disabled/>
                         <SidebarLink to="/about" label="About" Icon={<Help />} />
-                        <SidebarLink label="Contact" Icon={<Email />} onClick={() => window.open("mailto://whereismypetproject@gmail.com")} />
+                        <SidebarLink label="Contact" Icon={<Email />} onClick={() => window.open("mailto:whereismypetproject@gmail.com")} />
                     </List>
                 </div>
             </Drawer>

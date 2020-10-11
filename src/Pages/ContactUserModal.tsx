@@ -24,7 +24,7 @@ interface IFormValues {
 const initialValues: IFormValues = {
     message: "",
     phone: false,
-    email: false
+    email: true
 }
 
 function ContactUserModalContainer(props: IProps) {
