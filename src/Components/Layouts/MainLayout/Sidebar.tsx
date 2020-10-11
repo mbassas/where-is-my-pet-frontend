@@ -67,7 +67,7 @@ function Sidebar({close, isOpen}: IProps) {
                     <Divider />
                     <List>
                         <SidebarLink to="" label="Settings" Icon={<Settings />} disabled/>
-                        <SidebarLink to="" label="About" Icon={<Help />} disabled />
+                        <SidebarLink to="/about" label="About" Icon={<Help />} />
                         <SidebarLink label="Contact" Icon={<Email />} onClick={() => window.open("mailto://whereismypetproject@gmail.com")} />
                     </List>
                 </div>

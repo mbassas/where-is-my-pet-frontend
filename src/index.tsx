@@ -11,6 +11,7 @@ import AuthenticationProvider from './Components/Authentication';
 import Landing from './Pages/Landing';
 import AdminPages from './Pages/Admin';
 import UserPages from './Pages/User';
+import About from './Pages/About';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -36,6 +37,9 @@ ReactDOM.render(
             </Route>
             <Route path="/user">
               <UserPages />
+            </Route>
+            <Route path="/about">
+              <About />
             </Route>
             <Route path="/">
               <Landing />
