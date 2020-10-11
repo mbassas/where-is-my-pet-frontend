@@ -149,8 +149,9 @@ function UploadAnimalForm() {
                     <Field
                         component={TextField}
                         name="age"
-                        label="Pet Age"
+                        label="Pet Age (Years)"
                         variant="outlined"
+                        type="number"
                     />
                     <AnimalGenderInput />
                     <Field
