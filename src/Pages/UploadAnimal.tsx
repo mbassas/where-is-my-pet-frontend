@@ -1,6 +1,6 @@
 import React from 'react';
 import AnimalImageInput from '../Components/UploadAnimalForm/Fields/AnimalImageInput';
-import UploadAnimalFormContainer, { IAnimalFormValues } from '../Components/UploadAnimalForm/UploadAnimalForm';
+import UploadAnimalFormContainer, { EAnimalStatus, IAnimalFormValues } from '../Components/UploadAnimalForm/UploadAnimalForm';
 import $WhereIsMyPetApiClient from '../Services/WhereIsMyPetApiClient/WhereIsMyPetApiClient';
 import { Button, makeStyles} from '@material-ui/core';
 import AnimalListContainer from '../Components/Animals/AnimalListContainer';
@@ -89,7 +89,8 @@ function UploadAnimal() {
                     breed: formInitialValues.breed,
                     species: formInitialValues.species,
                     lat: formInitialValues.lat,
-                    lng: formInitialValues.lng
+                    lng: formInitialValues.lng,
+                    status: EAnimalStatus.LOST
                 }}
             />
         </>
